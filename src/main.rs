@@ -1,5 +1,6 @@
 mod some;
 mod vec;
+mod strings;
 
 fn main() {
     println!("Hello, world!");
@@ -14,6 +15,9 @@ fn main() {
 
     banner("Vectors");
     vec::vecs();
+
+    banner("Strings");
+    strings::main();
 }
 
 fn banner(s: &str) {
