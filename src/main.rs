@@ -2,6 +2,7 @@ mod some;
 mod vec;
 mod strings;
 mod hashmaps;
+mod rands;
 
 fn main() {
     println!("Hello, world!");
@@ -22,6 +23,9 @@ fn main() {
 
     banner("Hash maps");
     hashmaps::main();
+
+    banner("Random");
+    rands::main();
 }
 
 fn banner(s: &str) {
