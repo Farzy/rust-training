@@ -13,6 +13,7 @@ pub fn main() {
     println!("Zip = {:?}", teams.iter().zip(initial_scores.iter()));
     let scores : HashMap<_, _> = teams.iter().zip(initial_scores.iter()).collect();
     println!("scores zip = {:?}", scores);
+    println!("teams = {:?}", teams);
 
     let a = [1, 2, 3];
     let inverse : Vec<_> = a.iter()
@@ -23,7 +24,7 @@ pub fn main() {
     println!("rev.inverse({:?}) = {:?}", a, inverse);
 
     let sc : Vec<_> = scores.iter()
-        .map(|(&x,&y)| {println!("Map {} -> {}", x, y); (x, *y+10) })
+        .map(|(&x,&y)| {println!("Map {} -> {}", x, y); (format!("{}'", x), *y+10) })
         .collect();
     for (x, y) in sc {
         println!("For {} -> {}", x, y);
