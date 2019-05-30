@@ -1,6 +1,7 @@
 mod some;
 mod vec;
 mod strings;
+mod hashmaps;
 
 fn main() {
     println!("Hello, world!");
@@ -18,6 +19,9 @@ fn main() {
 
     banner("Strings");
     strings::main();
+
+    banner("Hash maps");
+    hashmaps::main();
 }
 
 fn banner(s: &str) {
