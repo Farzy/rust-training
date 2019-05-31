@@ -26,5 +26,9 @@ pub fn main() {
 
     let vecs = nums.to_vec();
     println!("nums = {:?}", nums); // no move
-//    let s : String = String::from_utf8(vecs).unwrap();
+    let s  = match String::from_utf8(vecs) {
+      Ok(x) => x.to_string(),
+      Err(e)=> e.to_string()
+    };
+    println!("Stringification of '{:?}' = {}", nums, s);
 }

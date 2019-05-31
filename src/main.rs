@@ -4,7 +4,16 @@ mod strings;
 mod hashmaps;
 mod rands;
 
+use std::env;
+
 fn main() {
+    let args: Vec<String> = env::args().collect();
+    println!("args = {:?}", args);
+
+    if args.len() > 1 && args[1] =="panic" {
+        panic!("Panic argument provided");
+    }
+
     println!("Hello, world!");
 
     banner("Option");
