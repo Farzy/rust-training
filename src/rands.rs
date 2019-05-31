@@ -17,4 +17,14 @@ pub fn main() {
     let s : String = String::from_iter(&l);
     println!("s = {}", s);
     println!("l = {:?}", l);
+
+    let v = vec!['a', 'b', 'c', 'd'];
+    println!("v: {:?}", v);
+    let s: String = v.into_iter().collect();
+    println!("v into s: {}", s);
+//    println!("v after into_iter: {:?}", v); // v is moved by into_iter
+
+    let vecs = nums.to_vec();
+    println!("nums = {:?}", nums); // no move
+//    let s : String = String::from_utf8(vecs).unwrap();
 }
