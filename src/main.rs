@@ -3,6 +3,7 @@ mod vec;
 mod strings;
 mod hashmaps;
 mod rands;
+mod panic;
 
 use std::env;
 
@@ -35,6 +36,9 @@ fn main() {
 
     banner("Random");
     rands::main();
+
+    banner("Panic");
+    panic::main();
 }
 
 fn banner(s: &str) {
