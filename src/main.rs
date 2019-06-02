@@ -39,6 +39,11 @@ fn main() {
 
     banner("Panic");
     panic::main();
+    match panic::read_username_from_file() {
+        Ok(name) => println!("Username: {}", name),
+        Err(e) => panic!("Error reading username from file: {}", e),
+    };
+
 }
 
 fn banner(s: &str) {
