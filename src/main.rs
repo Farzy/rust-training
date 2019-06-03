@@ -4,6 +4,7 @@ mod strings;
 mod hashmaps;
 mod rands;
 mod panic;
+mod generics;
 
 use std::env;
 
@@ -36,6 +37,9 @@ fn main() {
 
     banner("Random");
     rands::main();
+
+    banner("Generics");
+    generics::main();
 
     banner("Panic");
     panic::main();
