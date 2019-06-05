@@ -34,6 +34,28 @@ fn largest<T: PartialOrd + Copy>(list: &[T]) -> T {
     largest
 }
 
+struct Point<T> {
+    x: T,
+    y: T,
+}
+
+struct Point2<T, U> {
+    x: T,
+    y: U,
+}
+
+impl<T> Point<T> {
+    fn x(&self) -> &T {
+        &self.x
+    }
+}
+
+impl<T: Copy> Point<T> {
+    fn x2(&self) -> T {
+        self.x
+    }
+}
+
 pub fn main() {
     let number_list = vec![34, 50, 25, 100, 65];
 
@@ -58,5 +80,21 @@ pub fn main() {
 
     let result = largest(&char_list);
     println!("The largest char is {}", result);
+
+//------------------------------------------------------------
+
+    let integer = Point { x: 5, y: 10 };
+    let float = Point { x: 1.0, y: 4.0 };
+//    let wont_work = Point { x: 5, y: 4.0 };
+
+    let both_integer = Point2 { x: 5, y: 10 };
+    let both_float = Point2 { x: 1.0, y: 4.0 };
+    let mixed = Point2 { x: 5, y: 4.0 };
+
+    println!("integer.x = {}", integer.x());
+
+    let s = Point { x: "coucou", y: "test" };
+    println!("s.x = {}", s.x());
+    println!("s.x (Copy version) = {}", s.x2());
 }
 
