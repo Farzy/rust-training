@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 fn largest_i32(list: &[i32]) -> i32 {
     let mut largest = list[0];
 
@@ -86,6 +88,38 @@ impl Summary for Tweet {
     }
 }
 
+pub trait Summary2 {
+    fn summarize2(&self) -> String {
+        String::from("(Read more...)")
+    }
+}
+
+impl Summary2 for NewsArticle {}
+
+struct Pair<T> {
+    x: T,
+    y: T,
+}
+
+impl<T> Pair<T> {
+    fn new(x: T, y: T) -> Self {
+        Self {
+            x,
+            y,
+        }
+    }
+}
+
+impl<T: Display + PartialOrd> Pair<T> {
+    fn cmp_display(&self) {
+        if self.x >= self.y {
+            println!("The largest member is x = {}", self.x);
+        } else {
+            println!("The largest member is y = {}", self.y);
+        }
+    }
+}
+
 pub fn main() {
     let number_list = vec![34, 50, 25, 100, 65];
 
@@ -138,5 +172,17 @@ pub fn main() {
     };
 
     println!("1 new tweet: {}", tweet.summarize());
+
+    //------------------------------------------------------------
+
+    let article = NewsArticle {
+        headline: String::from("Penguins win the Stanley Cup Championship!"),
+        location: String::from("Pittsburgh, PA, USA"),
+        author: String::from("Iceburgh"),
+        content: String::from("The Pittsburgh Penguins once again are the best
+        hockey team in the NHL."),
+    };
+
+    println!("New article available! {}", article.summarize2());
 }
 
