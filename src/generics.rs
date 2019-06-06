@@ -96,5 +96,6 @@ pub fn main() {
     let s = Point { x: "coucou", y: "test" };
     println!("s.x = {}", s.x());
     println!("s.x (Copy version) = {}", s.x2());
+    assert_eq!(s.x(), &s.x2());
 }
 
