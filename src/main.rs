@@ -5,6 +5,7 @@ mod hashmaps;
 mod rands;
 mod panic;
 mod generics;
+mod fibonacci;
 
 use std::env;
 
@@ -40,6 +41,9 @@ fn main() {
 
     banner("Generics");
     generics::main();
+
+    banner("Fibonacci");
+    fibonacci::main();
 
     banner("Panic");
     panic::main();
