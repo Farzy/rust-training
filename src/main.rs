@@ -6,6 +6,7 @@ mod rands;
 mod panic;
 mod generics;
 mod fibonacci;
+mod closures;
 
 use std::env;
 
@@ -44,6 +45,9 @@ fn main() {
 
     banner("Fibonacci");
     fibonacci::main();
+
+    banner("Closures");
+    closures::main();
 
     banner("Panic");
     panic::main();
