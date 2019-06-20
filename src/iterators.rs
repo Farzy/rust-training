@@ -5,6 +5,11 @@ pub fn main() {
     for val in v1_iter {
         println!("Got {}", val);
     }
+
+    let v1: Vec<i32> = vec![1, 2, 3];
+
+    v1.iter().map(|x| x + 1);
+
 }
 
 #[test]
