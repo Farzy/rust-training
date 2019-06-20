@@ -7,6 +7,7 @@ mod panic;
 mod generics;
 mod fibonacci;
 mod closures;
+mod iterators;
 
 use std::env;
 
@@ -55,6 +56,9 @@ fn main() {
         Ok(name) => println!("Username: {}", name),
         Err(e) => panic!("Error reading username from file: {}", e),
     };
+
+    banner("Iterators");
+    iterators::main();
 
 }
 
