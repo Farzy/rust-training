@@ -1,4 +1,5 @@
 use std::collections::LinkedList;
+use crate::hello::hello;
 
 fn say_hello(name: &str) {
     println!("Hello {}!", name)
@@ -6,6 +7,12 @@ fn say_hello(name: &str) {
 
 fn add(a: i32, b: i64) -> i32 {
     return a + (b as i32);
+}
+
+mod hello {
+    pub fn hello() {
+        println!("Hello, world!");
+    }
 }
 
 fn main() {
@@ -40,4 +47,6 @@ fn main() {
     for item in v {
         println!("{}", item);
     }
+
+    hello();
 }
