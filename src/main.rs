@@ -1,3 +1,4 @@
+mod hello;
 use std::collections::LinkedList;
 use crate::hello::hello;
 
@@ -7,12 +8,6 @@ fn say_hello(name: &str) {
 
 fn add(a: i32, b: i64) -> i32 {
     return a + (b as i32);
-}
-
-mod hello {
-    pub fn hello() {
-        println!("Hello, world!");
-    }
 }
 
 fn main() {
