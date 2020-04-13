@@ -9,12 +9,14 @@ fn add(a: i32, b: i64) -> i32 {
 }
 
 fn main() {
+    println!("- Functions");
     say_hello("world");
 
     let i1 = 1;
     let i2 = 2;
     println!("{} + {} = {}", i1, i2, add(i1, i2));
 
+    println!("- LinkedList");
     let mut ll = LinkedList::new();
 
     ll.push_back(1);
@@ -26,5 +28,16 @@ fn main() {
     println!("Print LL using loop:");
     for foo in ll {
         println!("{}", foo);
+    }
+
+    println!("- Vector");
+    let mut v = Vec::new();
+
+    v.push('x');
+    v.push('y');
+    v.push('z');
+
+    for item in v {
+        println!("{}", item);
     }
 }
