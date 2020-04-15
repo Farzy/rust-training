@@ -1,5 +1,6 @@
 mod hello;
 use std::collections::LinkedList;
+use std::env;
 use crate::hello::hello;
 
 fn say_hello(name: &str) {
@@ -10,15 +11,26 @@ fn add(a: i32, b: i64) -> i32 {
     return a + (b as i32);
 }
 
+fn section(title: &str) {
+    let len = title.len();
+    let mut dashes = String::new();
+    for _ in 0..len {
+        dashes.push_str("-");
+    }
+    println!("\n+-{}-+", dashes);
+    println!("| {} |", title);
+    println!("+-{}-+\n", dashes);
+}
+
 fn main() {
-    println!("- Functions");
+    section("Functions");
     say_hello("world");
 
     let i1 = 1;
     let i2 = 2;
     println!("{} + {} = {}", i1, i2, add(i1, i2));
 
-    println!("- LinkedList");
+    section("LinkedList");
     let mut ll = LinkedList::new();
 
     ll.push_back(1);
@@ -32,7 +44,7 @@ fn main() {
         println!("{}", foo);
     }
 
-    println!("- Vector");
+    section("Vector");
     let mut v = Vec::new();
 
     v.push('x');
@@ -44,4 +56,11 @@ fn main() {
     }
 
     hello();
+
+    section("Env vars");
+
+    let env_vars = env::vars();
+    for (key,val) in env_vars {
+        println!("{}: {}", key, val);
+    }
 }
