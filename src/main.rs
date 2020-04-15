@@ -22,6 +22,19 @@ fn section(title: &str) {
     println!("+-{}-+\n", dashes);
 }
 
+const FIB_ZERO: u64 = 1;
+const FIB_ONE: u64 = 1;
+
+fn fib(n: u64) -> u64 {
+    if n == 0 {
+        FIB_ZERO
+    } else if n == 1 {
+        FIB_ONE
+    } else {
+        fib(n-1) + fib(n-2)
+    }
+}
+
 fn main() {
     section("Functions");
     say_hello("world");
@@ -62,5 +75,12 @@ fn main() {
     let env_vars = env::vars();
     for (key,val) in env_vars {
         println!("{}: {}", key, val);
+    }
+
+    section("Fibonacci recursive");
+
+    // Cannot reach 50 in a minute
+    for n in &[0, 1, 5, 10, 15, 20, 30, 35, 40, 42, 45] {
+        println!("fib({}) = {}", *n, fib(*n));
     }
 }
