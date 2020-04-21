@@ -1,7 +1,9 @@
 mod hello;
+mod strings;
 use std::collections::{LinkedList, HashMap};
 use std::env;
 use crate::hello::hello;
+use crate::strings::strings;
 
 fn say_hello(name: &str) {
     println!("Hello {}!", name)
@@ -95,14 +97,18 @@ fn main() {
     section("Fibonacci recursive");
 
     // Cannot reach 50 in a minute
-    for n in &[0, 1, 5, 10, 15, 20, 30, 35, 40, 42, 45] {
+    for n in &[0, 1, 5, 10, 15, 20, 30, 35, 40, 42] {
         println!("fib({}) = {}", *n, fib(*n));
     }
 
     section("Fibonacci dynamic");
 
     let mut map = HashMap::new();
-    for n in &[0, 1, 5, 10, 15, 20, 30, 35, 40, 42, 45] {
+    for n in &[0, 1, 5, 10, 15, 20, 30, 35, 40, 42] {
         println!("fib({}) = {}", *n, fib_dyn(*n, &mut map));
     }
+
+    section("Substrings");
+
+    strings();
 }
