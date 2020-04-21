@@ -5,7 +5,7 @@ use crate::hello::hello;
 mod strings;
 use crate::strings::strings;
 mod ownership;
-use crate::ownership::take_ownership_sum;
+use crate::ownership::{take_ownership_sum, borrow_sum};
 
 fn say_hello(name: &str) {
     println!("Hello {}!", name)
@@ -120,4 +120,8 @@ fn main() {
     let sum = take_ownership_sum(values);
     println!("Sum = {}", sum);
     // println!("Sum of {} values: {}", values.len(), sum); // Forbidden
+
+    let values2 = vec![1, 2, 3, 4, 5];
+    let sum = borrow_sum(&values2);
+    println!("Sum of {} values: {}", values2.len(), sum);
 }
