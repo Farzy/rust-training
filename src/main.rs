@@ -5,7 +5,7 @@ use crate::hello::hello;
 mod strings;
 use crate::strings::strings;
 mod ownership;
-use crate::ownership::{take_ownership_sum, borrow_sum};
+use crate::ownership::{take_ownership_sum, borrow_sum, cap_values_owned};
 
 fn say_hello(name: &str) {
     println!("Hello {}!", name)
@@ -124,4 +124,15 @@ fn main() {
     let values2 = vec![1, 2, 3, 4, 5];
     let sum = borrow_sum(&values2);
     println!("Sum of {} values: {}", values2.len(), sum);
+
+    let mut values = vec![1, 2, 3, 10000, 5];
+    values = cap_values_owned(10, values);
+
+    for v in &values {
+        println!("Capped value: {}", *v);
+    }
+
+    for v in values {
+        println!("Capped value: {}", v);
+    }
 }
