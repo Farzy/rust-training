@@ -1,9 +1,11 @@
-mod hello;
-mod strings;
 use std::collections::{LinkedList, HashMap};
 use std::env;
+mod hello;
 use crate::hello::hello;
+mod strings;
 use crate::strings::strings;
+mod ownership;
+use crate::ownership::take_ownership_sum;
 
 fn say_hello(name: &str) {
     println!("Hello {}!", name)
@@ -97,18 +99,25 @@ fn main() {
     section("Fibonacci recursive");
 
     // Cannot reach 50 in a minute
-    for n in &[0, 1, 5, 10, 15, 20, 30, 35, 40, 42] {
+    for n in &[0, 1, 5, 10, 15, 20, 30, 35, 40] {
         println!("fib({}) = {}", *n, fib(*n));
     }
 
     section("Fibonacci dynamic");
 
     let mut map = HashMap::new();
-    for n in &[0, 1, 5, 10, 15, 20, 30, 35, 40, 42] {
+    for n in &[0, 1, 5, 10, 15, 20, 30, 35, 40] {
         println!("fib({}) = {}", *n, fib_dyn(*n, &mut map));
     }
 
     section("Substrings");
 
     strings();
+
+    section("Ownership");
+
+    let values = vec![1, 2, 3, 4, 5];
+    let sum = take_ownership_sum(values);
+    println!("Sum = {}", sum);
+    // println!("Sum of {} values: {}", values.len(), sum); // Forbidden
 }
