@@ -22,3 +22,10 @@ pub fn cap_values_owned(max: i32, mut v: Vec<i32>) -> Vec<i32> {
     }
     v
 }
+pub fn cap_values(max: i32, v: &mut Vec<i32>) {
+    for index in 0..v.len() {
+        if v[index] > max {
+            v[index] = max;
+        }
+    }
+}
