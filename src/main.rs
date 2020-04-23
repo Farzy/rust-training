@@ -7,6 +7,9 @@ use crate::strings::strings;
 mod ownership;
 use crate::ownership::{take_ownership_sum, borrow_sum, cap_values_owned, cap_values};
 
+mod traits;
+use crate::traits::*;
+
 fn say_hello(name: &str) {
     println!("Hello {}!", name)
 }
@@ -145,4 +148,7 @@ fn main() {
         println!("Capped value mut: {}", *v);
     }
 
+    section("Traits");
+
+    test_traits();
 }
