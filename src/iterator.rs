@@ -37,7 +37,11 @@ pub fn iterators() {
 }
 
 pub fn map_reject_fold() {
-    let iter = 1..10;
-    let rev: Vec<f64> = iter.map(|x| { 1.0 / (x as f64) } ).collect();
-    println!("rev(1..10): {:?}", rev);
+    let iter = 1..10; // Cannot create iterator over range of float64
+    let rev: Vec<String> = iter
+        .map(|x| { 1.0 / (x as f64) } )
+        .map(|x| { x.sin() })
+        .map(|x| { format!("{:.6}", x) })
+        .collect();
+    println!("sin(rev(1..10)): {:?}", rev);
 }
