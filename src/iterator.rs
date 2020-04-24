@@ -50,4 +50,17 @@ pub fn map_filter_fold() {
     let iter = 1..10;
     let evens: Vec<_> = iter.filter(|x| { x % 2 == 0 }).collect();
     println!("Even numbers: {:?}", evens);
+
+    println!("Using fold:");
+    let items = 1..=10;
+    let sum = items.clone().fold(0, |sum, x| {
+       sum +x
+    });
+    println!("Sum of {:?} is {}", items, sum);
+
+    let items = 1..=10;
+    let string = items.clone().fold(String::new(), |sum, x| {
+       format!("{} {}", sum, x)
+    });
+    println!("{}", string.trim());
 }
