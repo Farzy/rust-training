@@ -7,6 +7,9 @@ use crate::strings::strings;
 mod ownership;
 use crate::ownership::{take_ownership_sum, borrow_sum, cap_values_owned, cap_values};
 
+mod dynamic;
+use crate::dynamic::*;
+
 mod traits;
 use crate::traits::*;
 
@@ -151,4 +154,8 @@ fn main() {
     section("Traits");
 
     test_traits();
+
+    section("Dynamic dispatch");
+
+    dynamic_display();
 }
