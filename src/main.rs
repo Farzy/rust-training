@@ -155,15 +155,14 @@ fn main() {
     }
 
     section("Traits");
-
     test_traits();
 
     section("Dynamic dispatch");
-
     dynamic_display();
 
     section("Iterators");
-
     iterators();
+
+    section("Map, Reject, Fold…");
     map_reject_fold();
 }

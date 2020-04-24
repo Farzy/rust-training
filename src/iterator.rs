@@ -43,5 +43,5 @@ pub fn map_reject_fold() {
         .map(|x| { x.sin() })
         .map(|x| { format!("{:.6}", x) })
         .collect();
-    println!("sin(rev(1..10)): {:?}", rev);
+    println!("Using map: sin(rev(1..10)) with 6 decimals: {:?}", rev);
 }
