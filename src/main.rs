@@ -13,6 +13,9 @@ use crate::dynamic::*;
 mod traits;
 use crate::traits::*;
 
+mod iterator;
+use crate::iterator::*;
+
 fn say_hello(name: &str) {
     println!("Hello {}!", name)
 }
@@ -158,4 +161,9 @@ fn main() {
     section("Dynamic dispatch");
 
     dynamic_display();
+
+    section("Iterators");
+
+    iterators();
+    map_reject_fold();
 }
