@@ -163,6 +163,6 @@ fn main() {
     section("Iterators");
     iterators();
 
-    section("Map, Reject, Fold…");
-    map_reject_fold();
+    section("Map, Filter, Fold…");
+    map_filter_fold();
 }

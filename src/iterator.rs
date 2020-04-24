@@ -36,12 +36,18 @@ pub fn iterators() {
     println!("v: {:?}", v);
 }
 
-pub fn map_reject_fold() {
+pub fn map_filter_fold() {
+    println!("Using map:");
     let iter = 1..10; // Cannot create iterator over range of float64
     let rev: Vec<String> = iter
         .map(|x| { 1.0 / (x as f64) } )
         .map(|x| { x.sin() })
         .map(|x| { format!("{:.6}", x) })
         .collect();
-    println!("Using map: sin(rev(1..10)) with 6 decimals: {:?}", rev);
+    println!("sin(rev(1..10)) with 6 decimals: {:?}", rev);
+
+    println!("Using filter:");
+    let iter = 1..10;
+    let evens: Vec<_> = iter.filter(|x| { x % 2 == 0 }).collect();
+    println!("Even numbers: {:?}", evens);
 }
