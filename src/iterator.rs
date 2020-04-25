@@ -63,4 +63,11 @@ pub fn map_filter_fold() {
        format!("{} {}", sum, x)
     });
     println!("{}", string.trim());
+
+    let sum = (1..=100).filter(|x| { x % 2 == 1})
+        .map(|x| { x * x })
+        .filter(|x| { x % 5 != 0 })
+        .fold(0, |sum, x| { sum + x });
+    println!("Sum of square of odd numbers from 1 to 100 except squares that are multiple of 5: {}",
+            sum);
 }
