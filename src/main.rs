@@ -29,10 +29,7 @@ fn add(a: i32, b: i64) -> i32 {
 
 fn section(title: &str) {
     let len = title.len();
-    let mut dashes = String::new();
-    for _ in 0..len {
-        dashes.push_str("-");
-    }
+    let dashes = "-".repeat(len);
     println!("\n+-{}-+", dashes);
     println!("| {} |", title);
     println!("+-{}-+\n", dashes);
