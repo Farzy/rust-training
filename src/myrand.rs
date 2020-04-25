@@ -2,6 +2,7 @@ extern crate rand;
 extern crate rand_chacha;
 
 use rand::{Rng, SeedableRng};
+use rand::seq::{SliceRandom};
 
 pub fn random() {
     let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(10);
@@ -14,4 +15,10 @@ pub fn random() {
     let mut ints = [0i8; 20];
     rng.fill(&mut ints);
     println!("Ints i8 = {:?}", ints);
+
+    let mut v: Vec<i8> = (1..20).collect();
+    v.shuffle(&mut rng);
+    println!("Shuffle 1..20: {:?}", v);
+    println!("Choose 1..20: {:?}", v.choose(&mut rng));
+    println!("Choose 1..20: {:?}", v.choose(&mut rng));
 }
