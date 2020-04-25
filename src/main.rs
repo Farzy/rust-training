@@ -16,6 +16,9 @@ use crate::traits::*;
 mod iterator;
 use crate::iterator::*;
 
+mod myrand;
+use crate::myrand::*;
+
 fn say_hello(name: &str) {
     println!("Hello {}!", name)
 }
@@ -165,4 +168,7 @@ fn main() {
 
     section("Map, Filter, Fold…");
     map_filter_fold();
+
+    section("Randomness");
+    random();
 }
