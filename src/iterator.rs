@@ -64,7 +64,8 @@ pub fn map_filter_fold() {
     });
     println!("{}", string.trim());
 
-    let sum = (1..=100).filter(|x| { x % 2 == 1})
+    let sum = (1..=100)
+        .filter(|x| { x % 2 == 1})
         .map(|x| { x * x })
         .filter(|x| { x % 5 != 0 })
         .fold(0, |sum, x| { sum + x });
