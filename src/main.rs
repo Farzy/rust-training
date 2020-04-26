@@ -19,6 +19,9 @@ use crate::iterator::*;
 mod myrand;
 use crate::myrand::*;
 
+mod drop;
+use crate::drop::*;
+
 fn say_hello(name: &str) {
     println!("Hello {}!", name)
 }
@@ -175,7 +178,7 @@ fn main() {
     // Only execute this interactive code if "-i" is provided on the command line
     let mut do_input = false;
     for arg in env::args() {
-        if arg == "-i" {
+        if arg == "-i".to_string() {
             do_input = true;
             break;
         }
@@ -191,4 +194,7 @@ fn main() {
     } else {
         println!("SKIPPED: In order to execute this section add '-i' to the command line.")
     }
+
+    section("Drop");
+    droppy();
 }
