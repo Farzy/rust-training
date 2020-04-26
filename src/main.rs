@@ -5,7 +5,7 @@ use crate::hello::hello;
 mod strings;
 use crate::strings::strings;
 mod ownership;
-use crate::ownership::{take_ownership_sum, borrow_sum, cap_values_owned, cap_values};
+use crate::ownership::*;
 
 mod dynamic;
 use crate::dynamic::*;
@@ -153,6 +153,8 @@ fn main() {
     for v in &values {
         println!("Capped value mut: {}", *v);
     }
+
+    mutable_and_immutable_borrows();
 
     section("Traits");
     test_traits();
