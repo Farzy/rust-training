@@ -33,6 +33,7 @@ pub fn cap_values(max: i32, v: &mut Vec<i32>) {
 pub fn mutable_and_immutable_borrows() {
     let mut list = vec![1, 2, 3];
 
+    // Mutable borrow acceptable here because its scope is only this line
     *list.first_mut().expect("list was empty") += 1;
 
     let list_first = list.first();
@@ -42,5 +43,9 @@ pub fn mutable_and_immutable_borrows() {
         "The first element is {:?} and the last is {:?}",
         list_first,
         list_last
-    )
+    );
+
+    // Works also here because the scope of list_first and list_last has ended.
+    // This did not compile in previous versions of the compiler (~ 1.24).
+    *list.first_mut().expect("list was empty") += 1;
 }
