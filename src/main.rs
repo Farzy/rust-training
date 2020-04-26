@@ -182,7 +182,7 @@ fn main() {
         let mut word = String::new();
         while word.trim() != "rust" {
             println!("What is the secret word?");
-            word = String::new();
+            word.clear();
             io::stdin().read_line(&mut word).expect("Could not read stdin");
         }
         println!("You found the secret word! Please proceed!");
