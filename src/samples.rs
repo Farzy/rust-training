@@ -1,17 +1,17 @@
 mod some;
 mod vec;
-mod strings2;
+mod strings;
 mod hashmaps;
 mod rands;
 mod panic;
 mod generics;
 mod fibonacci;
 mod closures;
-mod iterators2;
+mod iterators;
 
 use std::env;
 
-fn main() {
+pub fn main() {
     let args: Vec<String> = env::args().collect();
     println!("args = {:?}", args);
 
@@ -33,7 +33,7 @@ fn main() {
     vec::vecs();
 
     banner("Strings2");
-    strings2::main();
+    strings::main();
 
     banner("Hash maps");
     hashmaps::main();
@@ -58,7 +58,7 @@ fn main() {
     };
 
     banner("Iterators2");
-    iterators2::main();
+    iterators::main();
 
 }
 

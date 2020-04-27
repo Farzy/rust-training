@@ -66,7 +66,14 @@ fn fib_dyn(n: u64, map: &mut HashMap<u64, u64>) -> u64 {
     }
 }
 
+// This module contains all the functions that we previously in my "samples" Rust project
+mod samples;
+
 fn main() {
+    // Execute older code
+    section("Old samples");
+    samples::main();
+
     section("Functions");
     say_hello("world");
 
