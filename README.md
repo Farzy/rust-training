@@ -2,9 +2,9 @@
 
 ## Synopsis
 
-Test program for the "**Learning Rust**" by Leo Tindall and "**Rust in Motion" by Carol Nichols / 
+Test program for the "**Learning Rust**" by Leo Tindall and "**Rust in Motion**" by Carol Nichols / 
 Jake Goulding tutorials on [O'Reilly Learning](https://learning.oreilly.com) and also the 
-"[Rust Book](https://doc.rust-lang.org/book/)".
+"**[Rust Book](https://doc.rust-lang.org/book/)**".
 
 I use this project to practice Rust. There is no guideline in the code, I just add
 modules while discovering features.
