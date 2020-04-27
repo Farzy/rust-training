@@ -4,11 +4,7 @@ use std::fs::OpenOptions;
 use std::io;
 use std::fmt;
 
-const MAX_DOCS_CREATED_PER_MINUTE: u8 = 8;
-
-fn num_docs_created_in_last_minute() -> u8 {
-    2
-}
+const MAX_DOCS_CREATED_PER_MINUTE: u8 = 100;
 
 #[derive(Debug)]
 pub enum DocumentServiceError {
@@ -47,8 +43,8 @@ impl fmt::Display for DocumentServiceError {
     }
 }
 
-pub fn create_document(filename: &str) -> Result<File, DocumentServiceError> {
-    if num_docs_created_in_last_minute() > MAX_DOCS_CREATED_PER_MINUTE {
+pub fn create_document(filename: &str, num_docs_created_in_last_minute: u8) -> Result<File, DocumentServiceError> {
+    if num_docs_created_in_last_minute > MAX_DOCS_CREATED_PER_MINUTE {
         return Err(DocumentServiceError::RateLimitExceeded);
     }
 
@@ -63,12 +59,25 @@ pub fn create_document(filename: &str) -> Result<File, DocumentServiceError> {
 pub fn main() {
     std::fs::remove_file("custom_error.txt").ok(); // Don't mind failure if file does not exist
 
-    println!("First time calling create_document()…"); // Should succeed
-    if let Err(e) = create_document("custom_error.txt") {
+    println!("Calling create_document() while exceeding rate limit…");
+    if let Err(e) = create_document("custom_error.txt", 200) {
+        eprintln!("An error happened!");
+        eprintln!("- Short version: {}", e);
+        eprintln!("- Long version:  {:?}", e);
+    }
+
+    std::fs::remove_file("custom_error.txt").ok(); // Don't mind failure if file does not exist
+
+    println!("Calling create_document() after erasing existing file…"); // Should succeed
+    if let Err(e) = create_document("custom_error.txt", 2) {
         eprintln!("An error happened: {:?}", e);
+    } else {
+        eprintln!("Succeeded!");
     }
     println!("Second time calling create_document()…"); // Should fail
-    if let Err(e) = create_document("custom_error.txt") {
-        eprintln!("An error happened: {:?}", e);
+    if let Err(e) = create_document("custom_error.txt", 2) {
+        eprintln!("An error happened!");
+        eprintln!("- Short version: {}", e);
+        eprintln!("- Long version:  {:?}", e);
     }
 }
