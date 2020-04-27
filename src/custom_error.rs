@@ -60,6 +60,15 @@ fn create_document(filename: &str, num_docs_created_in_last_minute: u8) -> Resul
     Ok(file)
 }
 
+fn create_project(project_name: &str) -> Result<()> {
+    create_document(&format!("{}-draft1", project_name), 2)?;
+    create_document(&format!("{}-draft2", project_name), 2)?;
+    create_document(&format!("{}-revision1", project_name), 2)?;
+    create_document(&format!("{}-revision2", project_name), 2)?;
+
+    Ok(())
+}
+
 pub fn main() {
     std::fs::remove_file("custom_error.txt").ok(); // Don't mind failure if file does not exist
 
@@ -87,5 +96,11 @@ pub fn main() {
         eprintln!("- Long version:  {:?}", e);
     } else {
         eprintln!("Succeeded!");
+    }
+
+    println!("Simulating project creation…");
+    match create_project("my-project") {
+        Ok(()) => println!("Project created successfully!"),
+        Err(e) => println!("Project creation failed: {}", e),
     }
 }
