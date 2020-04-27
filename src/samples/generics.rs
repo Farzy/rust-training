@@ -36,11 +36,13 @@ fn largest<T: PartialOrd + Copy>(list: &[T]) -> T {
     largest
 }
 
+#[allow(dead_code)]
 struct Point<T> {
     x: T,
     y: T,
 }
 
+#[allow(dead_code)]
 struct Point2<T, U> {
     x: T,
     y: U,
@@ -96,11 +98,13 @@ pub trait Summary2 {
 
 impl Summary2 for NewsArticle {}
 
+#[allow(dead_code)]
 struct Pair<T> {
     x: T,
     y: T,
 }
 
+#[allow(dead_code)]
 impl<T> Pair<T> {
     fn new(x: T, y: T) -> Self {
         Self {
@@ -110,6 +114,7 @@ impl<T> Pair<T> {
     }
 }
 
+#[allow(dead_code)]
 impl<T: Display + PartialOrd> Pair<T> {
     fn cmp_display(&self) {
         if self.x >= self.y {
@@ -148,12 +153,12 @@ pub fn main() {
 //------------------------------------------------------------
 
     let integer = Point { x: 5, y: 10 };
-    let float = Point { x: 1.0, y: 4.0 };
+    let _float = Point { x: 1.0, y: 4.0 };
 //    let wont_work = Point { x: 5, y: 4.0 };
 
-    let both_integer = Point2 { x: 5, y: 10 };
-    let both_float = Point2 { x: 1.0, y: 4.0 };
-    let mixed = Point2 { x: 5, y: 4.0 };
+    let _both_integer = Point2 { x: 5, y: 10 };
+    let _both_float = Point2 { x: 1.0, y: 4.0 };
+    let _mixed = Point2 { x: 5, y: 4.0 };
 
     println!("integer.x = {}", integer.x());
 

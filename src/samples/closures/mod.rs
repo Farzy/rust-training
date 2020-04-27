@@ -41,6 +41,7 @@ use std::thread;
 use std::time::Duration;
 use std::collections::HashMap;
 
+#[allow(unused_variables)]
 fn generate_workout(intensity: u32, random_number: u32) {
     let mut expensive_result = Cacher::new(|num| {
         println!("calculating slowly...");
@@ -84,6 +85,7 @@ fn call_with_different_values() {
 
 use std::hash::Hash;
 
+#[allow(dead_code)]
 struct CacherGen<T, U, V>
     where T: Fn(U) -> V
 {
@@ -91,6 +93,7 @@ struct CacherGen<T, U, V>
     value: HashMap<U,V>,
 }
 
+#[allow(dead_code)]
 impl<T,U,V> CacherGen<T,U,V>
     where T: Fn(U) -> V,
           U: Eq + Hash + Copy,
@@ -115,6 +118,8 @@ impl<T,U,V> CacherGen<T,U,V>
     }
 }
 
+#[allow(dead_code)]
+#[allow(unused_variables)]
 fn generate_workout_gen(intensity: &str, random_number: f64) {
     let mut expensive_result = CacherGen::new(|num| {
         println!("calculating slowly...");
