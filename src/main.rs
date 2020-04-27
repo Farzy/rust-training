@@ -1,3 +1,6 @@
+#[macro_use]
+extern crate quick_error;
+
 use std::collections::{LinkedList, HashMap};
 use std::{env, io};
 mod hello;
@@ -13,7 +16,7 @@ mod drop;
 mod samples;
 mod box_error;
 mod custom_error;
-
+mod quick_error_test;
 
 fn say_hello(name: &str) {
     println!("Hello {}!", name)
@@ -203,4 +206,7 @@ fn main() {
 
     section("Custom error");
     custom_error::main();
+
+    section("quick-error");
+    quick_error_test::main();
 }

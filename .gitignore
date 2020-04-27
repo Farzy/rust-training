@@ -112,3 +112,7 @@ fabric.properties
 **/*.rs.bk
 
 /custom_error.txt
+/my-project-draft1
+/my-project-draft2
+/my-project-revision1
+/my-project-revision2

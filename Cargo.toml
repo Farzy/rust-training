@@ -9,3 +9,4 @@ edition = "2018"
 [dependencies]
 rand = "0.7"
 rand_chacha = "0.2"
+quick-error = "1.2.3"
