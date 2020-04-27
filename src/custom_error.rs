@@ -7,7 +7,7 @@ use std::fmt;
 const MAX_DOCS_CREATED_PER_MINUTE: u8 = 100;
 
 #[derive(Debug)]
-pub enum DocumentServiceError {
+enum DocumentServiceError {
     RateLimitExceeded,
     Io(io::Error),
 }
@@ -43,7 +43,11 @@ impl fmt::Display for DocumentServiceError {
     }
 }
 
-pub fn create_document(filename: &str, num_docs_created_in_last_minute: u8) -> Result<File, DocumentServiceError> {
+// Type alias to shorten "Result<T, DocumentServiceError>" to "Result<T>"
+use std::result;
+type Result<T> = result::Result<T, DocumentServiceError>;
+
+fn create_document(filename: &str, num_docs_created_in_last_minute: u8) -> Result<File> {
     if num_docs_created_in_last_minute > MAX_DOCS_CREATED_PER_MINUTE {
         return Err(DocumentServiceError::RateLimitExceeded);
     }
