@@ -11,6 +11,7 @@ mod myrand;
 mod drop;
 // This module contains all the functions that we previously in my "samples" Rust project
 mod samples;
+mod box_error;
 
 fn say_hello(name: &str) {
     println!("Hello {}!", name)
@@ -186,4 +187,15 @@ fn main() {
 
     section("Drop");
     drop::main();
+
+    section("Box Error");
+    let envvar = "NUM_THREADS";
+    println!("Testing with no environment variable named {}…", envvar);
+    box_error::main();
+    println!("Testing with non numeric env. var. 'foo'…");
+    env::set_var(envvar, "foo");
+    box_error::main();
+    println!("Testing with numeric env. var. '42'…");
+    env::set_var(envvar, "42");
+    box_error::main();
 }
