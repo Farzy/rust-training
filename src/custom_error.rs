@@ -68,6 +68,8 @@ pub fn main() {
         eprintln!("An error happened!");
         eprintln!("- Short version: {}", e);
         eprintln!("- Long version:  {:?}", e);
+    } else {
+        eprintln!("Succeeded!");
     }
 
     std::fs::remove_file("custom_error.txt").ok(); // Don't mind failure if file does not exist
@@ -83,5 +85,7 @@ pub fn main() {
         eprintln!("An error happened!");
         eprintln!("- Short version: {}", e);
         eprintln!("- Long version:  {:?}", e);
+    } else {
+        eprintln!("Succeeded!");
     }
 }
