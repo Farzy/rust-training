@@ -52,7 +52,7 @@ fn transact<Q: CreditCharge>(card: Q) {
     }
 }
 
-pub fn test_traits() {
+pub fn main() {
     let card1 = BitCredit { btcnumber: 1024 };
     let code = 4096;
     if card1.charge_with_id(code) {

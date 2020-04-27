@@ -3,24 +3,14 @@ use std::{env, io};
 mod hello;
 use crate::hello::hello;
 mod strings;
-use crate::strings::strings;
 mod ownership;
-use crate::ownership::*;
-
 mod dynamic;
-use crate::dynamic::*;
-
 mod traits;
-use crate::traits::*;
-
 mod iterator;
-use crate::iterator::*;
-
 mod myrand;
-use crate::myrand::*;
-
 mod drop;
-use crate::drop::*;
+// This module contains all the functions that we previously in my "samples" Rust project
+mod samples;
 
 fn say_hello(name: &str) {
     println!("Hello {}!", name)
@@ -66,9 +56,6 @@ fn fib_dyn(n: u64, map: &mut HashMap<u64, u64>) -> u64 {
     }
 }
 
-// This module contains all the functions that we previously in my "samples" Rust project
-mod samples;
-
 fn main() {
     // Execute older code
     section("Old samples");
@@ -109,44 +96,39 @@ fn main() {
     hello();
 
     section("Env vars");
-
     let env_vars = env::vars();
     for (key,val) in env_vars {
         println!("{}: {}", key, val);
     }
 
     section("Fibonacci recursive");
-
     // Cannot reach 50 in a minute
     for n in &[0, 1, 5, 10, 15, 20, 30, 35, 40] {
         println!("fib({}) = {}", *n, fib(*n));
     }
 
     section("Fibonacci dynamic");
-
     let mut map = HashMap::new();
     for n in &[0, 1, 5, 10, 15, 20, 30, 35, 40] {
         println!("fib({}) = {}", *n, fib_dyn(*n, &mut map));
     }
 
     section("Substrings");
-
-    strings();
+    strings::main();
 
     section("Ownership");
-
     let values = vec![1, 2, 3, 4, 5];
-    let sum = take_ownership_sum(values);
+    let sum = ownership::take_ownership_sum(values);
     println!("Sum = {}", sum);
     // println!("Sum of {} values: {}", values.len(), sum); // Forbidden
 
     let values2 = vec![1, 2, 3, 4, 5];
-    let sum = borrow_sum(&values2);
+    let sum = ownership::borrow_sum(&values2);
     println!("Sum of {} values: {}", values2.len(), sum);
 
     println!("cap_values_owned");
     let mut values = vec![1, 2, 3, 10000, 5];
-    values = cap_values_owned(10, values);
+    values = ownership::cap_values_owned(10, values);
 
     for v in &values {
         println!("Capped value owned: {}", *v);
@@ -158,28 +140,28 @@ fn main() {
 
     println!("cap_values mutable arg");
     let mut values = vec![1, 2, 3, 10000, 5];
-    cap_values(10, &mut values);
+    ownership::cap_values(10, &mut values);
 
     for v in &values {
         println!("Capped value mut: {}", *v);
     }
 
-    mutable_and_immutable_borrows();
+    ownership::mutable_and_immutable_borrows();
 
     section("Traits");
-    test_traits();
+    traits::main();
 
     section("Dynamic dispatch");
-    dynamic_display();
+    dynamic::main();
 
     section("Iterators");
-    iterators();
+    iterator::iterators();
 
     section("Map, Filter, Fold…");
-    map_filter_fold();
+    iterator::map_filter_fold();
 
     section("Randomness");
-    random();
+    myrand::main();
 
     section("Input");
     // Only execute this interactive code if "-i" is provided on the command line
@@ -203,5 +185,5 @@ fn main() {
     }
 
     section("Drop");
-    droppy();
+    drop::main();
 }

@@ -8,7 +8,7 @@ impl Drop for Noisy {
     }
 }
 
-pub fn droppy() {
+pub fn main() {
     let _n1 = Noisy { id: 1};
     let _n2 = Noisy { id: 2};
     println!("End of droppy function.");

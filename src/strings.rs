@@ -1,4 +1,4 @@
-pub fn strings() {
+pub fn main() {
     let str = String::from("Hello world!");
 
     let first = match str.chars().next() {
