@@ -7,7 +7,7 @@ mod panic;
 mod generics;
 mod fibonacci;
 mod closures;
-mod iterators;
+mod iterators2;
 
 use std::env;
 
@@ -57,8 +57,8 @@ fn main() {
         Err(e) => panic!("Error reading username from file: {}", e),
     };
 
-    banner("Iterators");
-    iterators::main();
+    banner("Iterators2");
+    iterators2::main();
 
 }
 
