@@ -1,6 +1,6 @@
 mod some;
 mod vec;
-mod strings;
+mod strings2;
 mod hashmaps;
 mod rands;
 mod panic;
@@ -32,8 +32,8 @@ fn main() {
     banner("Vectors");
     vec::vecs();
 
-    banner("Strings");
-    strings::main();
+    banner("Strings2");
+    strings2::main();
 
     banner("Hash maps");
     hashmaps::main();
