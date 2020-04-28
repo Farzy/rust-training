@@ -59,6 +59,11 @@ pub fn main() {
     println!("Simulating second project creation…");
     match create_project(PROJECT_NAME) {
         Ok(()) => println!("Project created successfully!"),
-        Err(e) => println!("Project creation failed: {}", e),
+        Err(e) => {
+            println!("Project creation failed: {}", e);
+            for trace in e.iter().skip(1) {
+                println!("Caused by {}", trace);
+            }
+        },
     }
 }
