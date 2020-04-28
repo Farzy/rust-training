@@ -1,6 +1,7 @@
 use std::fs::File;
 use std::fs::OpenOptions;
 use std::io;
+use quick_error::ResultExt;
 
 const MAX_DOCS_CREATED_PER_MINUTE: u8 = 100;
 
@@ -14,15 +15,17 @@ quick_error! {
         RateLimitExceeded {
             display("You have exceeded the allowed number of documents per minute.")
         }
-        Io(cause: io::Error) {
-            display("I/O error: {}", cause)
-            from()
+        Io(filename: String, cause: io::Error) {
+            display("I/O error: {} for filename {}", cause, filename    )
+            context(filename: &'a str, cause: io::Error)
+                -> (filename.to_string(), cause)
         }
     }
 }
 
 // Type alias to shorten "Result<T, DocumentServiceError>" to "Result<T>"
 use std::result;
+
 type Result<T> = result::Result<T, DocumentServiceError>;
 
 fn create_document(filename: &str) -> Result<File> {
@@ -33,7 +36,8 @@ fn create_document(filename: &str) -> Result<File> {
     let file = OpenOptions::new()
         .write(true)
         .create_new(true)
-        .open(filename)?;
+        .open(filename)
+        .context(filename)?;
 
     Ok(file)
 }
@@ -53,6 +57,11 @@ pub fn main() {
     }
 
     println!("Simulating project creation…");
+    match create_project("my-project") {
+        Ok(()) => println!("Project created successfully!"),
+        Err(e) => println!("Project creation failed: {}", e),
+    }
+    println!("Simulating second project creation…");
     match create_project("my-project") {
         Ok(()) => println!("Project created successfully!"),
         Err(e) => println!("Project creation failed: {}", e),
