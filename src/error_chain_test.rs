@@ -31,7 +31,8 @@ fn create_document(filename: &str) -> Result<File> {
     let file = OpenOptions::new()
         .write(true)
         .create_new(true)
-        .open(filename)?;
+        .open(filename)
+        .chain_err(|| format!("could not open {}", filename))?;
 
     Ok(file)
 }
