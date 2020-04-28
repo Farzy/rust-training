@@ -64,6 +64,11 @@ pub fn main() {
             for trace in e.iter().skip(1) {
                 println!("Caused by {}", trace);
             }
+            if let Some(backtrace) = e.backtrace() {
+                println!("Backtrace: {:?}", backtrace);
+            } else {
+                println!("IN ORDER TO SHOW BACKTRACE RUN WITH 'RUST_BACKTRACE=1'.");
+            }
         },
     }
 }
