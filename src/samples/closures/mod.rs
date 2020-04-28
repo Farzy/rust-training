@@ -45,7 +45,7 @@ use std::collections::HashMap;
 fn generate_workout(intensity: u32, random_number: u32) {
     let mut expensive_result = Cacher::new(|num| {
         println!("calculating slowly...");
-        thread::sleep(Duration::from_secs(2));
+        thread::sleep(Duration::from_secs(1));
         intensity
     });
 
@@ -123,7 +123,7 @@ impl<T,U,V> CacherGen<T,U,V>
 fn generate_workout_gen(intensity: &str, random_number: f64) {
     let mut expensive_result = CacherGen::new(|num| {
         println!("calculating slowly...");
-        thread::sleep(Duration::from_secs(2));
+        thread::sleep(Duration::from_secs(1));
         let i : u64 = intensity.parse().unwrap();
         i
     });
