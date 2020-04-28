@@ -4,6 +4,7 @@ use std::io;
 use quick_error::ResultExt;
 
 const MAX_DOCS_CREATED_PER_MINUTE: u8 = 100;
+const PROJECT_NAME: &str = "my-project";
 
 fn num_docs_created_in_last_minute() -> u8 {
     2
@@ -53,16 +54,16 @@ fn create_project(project_name: &str) -> Result<()> {
 
 pub fn main() {
     for suffix in [ "draft1", "draft2", "revision1", "revision2"].iter() {
-        std::fs::remove_file(&format!("my-project-{}", suffix)).ok();
+        std::fs::remove_file(&format!("{}-{}", PROJECT_NAME, suffix)).ok();
     }
 
     println!("Simulating project creation…");
-    match create_project("my-project") {
+    match create_project(PROJECT_NAME) {
         Ok(()) => println!("Project created successfully!"),
         Err(e) => println!("Project creation failed: {}", e),
     }
     println!("Simulating second project creation…");
-    match create_project("my-project") {
+    match create_project(PROJECT_NAME) {
         Ok(()) => println!("Project created successfully!"),
         Err(e) => println!("Project creation failed: {}", e),
     }
