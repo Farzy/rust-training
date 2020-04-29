@@ -44,4 +44,8 @@ pub fn main() {
     println!("Array of strings: {:?}", s);
     let numbers: Vec<Result<i32, ParseIntError>> = s.iter().map(|x| x.parse::<i32>()).collect();
     println!("Array of Result<i32>: {:?}", numbers);
+    // Here we have to use "into_iter()" because Result<> does not implement Copy and is
+    // therefore consumed by map().
+    let squares: Vec<Result<i32, ParseIntError>> = numbers.into_iter().map(|x| x.map(|y| y*y)).collect();
+    println!("Array of Result<i32>: {:?}", squares);
 }
