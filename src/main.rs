@@ -7,6 +7,11 @@ extern crate error_chain;
 extern crate failure;
 extern crate failure_derive;
 
+extern crate serde;
+extern crate serde_json;
+#[macro_use]
+extern crate serde_derive;
+
 use std::collections::{LinkedList, HashMap};
 use std::{env, io};
 mod hello;
@@ -25,6 +30,7 @@ mod custom_error;
 mod quick_error_test;
 mod error_chain_test;
 mod failure_test;
+mod json;
 
 fn say_hello(name: &str) {
     println!("Hello {}!", name)
@@ -223,4 +229,7 @@ fn main() {
 
     section("failure");
     failure_test::main();
+
+    section("JSON");
+    json::main();
 }
