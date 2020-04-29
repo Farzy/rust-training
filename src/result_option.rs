@@ -31,4 +31,8 @@ pub fn main() {
     let i2 = o2.unwrap_or_default();
     println!("Results: '{:?}' / '{:?}'", i1, i2);
 
+    let a = vec![Some(2), Some(-3), None, Some(10)];
+    println!("Array of Option: {:?}", a);
+    let b: Vec<Option<i32>> = a.into_iter().map(|x| x.map(|y| y*y)).collect();
+    println!("Array of Option squared: {:?}", b);
 }
