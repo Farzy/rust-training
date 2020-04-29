@@ -31,6 +31,8 @@ mod quick_error_test;
 mod error_chain_test;
 mod failure_test;
 mod json;
+mod result_option;
+
 
 fn say_hello(name: &str) {
     println!("Hello {}!", name)
@@ -232,4 +234,7 @@ fn main() {
 
     section("JSON");
     json::main();
+
+    section("Result<> and Option");
+    result_option::main();
 }
