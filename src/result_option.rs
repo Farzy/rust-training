@@ -33,6 +33,6 @@ pub fn main() {
 
     let a = vec![Some(2), Some(-3), None, Some(10)];
     println!("Array of Option: {:?}", a);
-    let b: Vec<Option<i32>> = a.into_iter().map(|x| x.map(|y| y*y)).collect();
+    let b: Vec<Option<i32>> = a.iter().map(|x| x.map(|y| y*y)).collect();
     println!("Array of Option squared: {:?}", b);
 }
