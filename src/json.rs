@@ -24,9 +24,9 @@ pub fn main() {
     let first_inner = broken_json
         .unwrap_or(Person { name: String::from("Unknown person") });
     println!("First name: {:?}", first_inner.name);
-    // Third version use default value
-    // NOTE: unwrap_or() takes ownership of the content of Result≤>, adding "&" does not
-    //       solve the problem. So let's create the JSON again
+    // Third version uses default value
+    // NOTE: unwrap_or() took ownership of the content of Result≤>, adding "&" did not
+    //       solve the problem. So let's create the JSON again.
     let broken_json = serde_json::from_str::<Person>(r#"{
             "name": "Margaret Hamilton",
         }"#);
