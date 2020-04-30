@@ -45,4 +45,13 @@ pub fn main() {
 
     println!("\n- Stemmer");
     suffix_removal();
+
+    let word = String::from("credited");
+    let word_stem = {
+        let stemmer = Stemmer {
+            suffix: String::from("ed"),
+        };
+        stemmer.stem(&word)
+    };
+    println!("The stem of {} is {}.", word, word_stem);
 }
