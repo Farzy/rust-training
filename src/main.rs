@@ -33,7 +33,7 @@ mod failure_test;
 mod json;
 mod result_option;
 // mod lifetime;
-
+mod generics;
 
 fn say_hello(name: &str) {
     println!("Hello {}!", name)
@@ -241,4 +241,7 @@ fn main() {
 
     // section("Lifetime");
     // lifetime::main();
+
+    section("Generics");
+    generics::main();
 }
