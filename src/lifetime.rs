@@ -3,7 +3,7 @@ pub struct Stemmer {
 }
 
 impl Stemmer {
-    pub fn stem(&self, word: &str) -> &str {
+    pub fn stem<'a>(&self, word: &'a str) -> &'a str {
         if word.ends_with(&self.suffix) {
             let index = word
                 .rfind(&self.suffix)
@@ -25,7 +25,7 @@ fn suffix_removal() {
     assert_eq!(stemmer.stem("credit"), "credit");
 }
 
-fn simulate_game(home: &str, away: &str) -> &str {
+fn simulate_game<'a>(home: &'a str, away: &'a str) -> &'a str {
     if rand::random() {
         home
     } else {

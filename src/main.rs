@@ -32,7 +32,7 @@ mod error_chain_test;
 mod failure_test;
 mod json;
 mod result_option;
-// mod lifetime;
+mod lifetime;
 mod generics;
 
 fn say_hello(name: &str) {
@@ -239,8 +239,8 @@ fn main() {
     section("Result<> and Option");
     result_option::main();
 
-    // section("Lifetime");
-    // lifetime::main();
+    section("Lifetime");
+    lifetime::main();
 
     section("Generics");
     generics::main();
