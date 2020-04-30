@@ -49,12 +49,13 @@ fn section(title: &str) {
 
 fn usage(functions: &HashMap<String, (String, fn())>) {
     eprintln!(r#"
-Usage: PROGNAME [options] [function]
+Usage: PROGNAME [options] [function...]
 
  -h: Print this help
  -i: Only use by "do_input" for interaction
 
-If no function name is giver than all are executed.
+Specify one or more function names.
+If no function name is giver then all of them are executed.
 
 List of functions:"#);
     for (name, (description, _)) in functions.iter() {
@@ -89,21 +90,23 @@ fn main() {
     functions.insert(String::from("function-crate"), (String::from("Functions and Crates"), functions::main));
     functions.insert(String::from("old-tutorial"), (String::from("Old tutorial code"), samples::main));
 
-    if env::args().len() == 1 {
+    if env::args().len() == 1 { // No arguments
         for (name, (description, func)) in functions.iter() {
             section(&format!("{} ({})", description, name));
             func();
         }
     } else {
-        let k = env::args().skip(1).next().unwrap();
-        if k == "-h" || k == "--help" {
-            usage(&functions);
-        } else if functions.contains_key(&k) {
-            let (description, func) = functions.get(&k).unwrap();
-            section(description);
-            func();
-        } else {
-            eprintln!("ERROR: Function '{}' not found", k);
+        for k in env::args().skip(1) {
+            if k == "-h" || k == "--help" {
+                usage(&functions);
+                return;
+            } else if functions.contains_key(&k) {
+                let (description, func) = functions.get(&k).unwrap();
+                section(description);
+                func();
+            } else {
+                eprintln!("\nERROR: Function '{}' not found", k);
+            }
         }
     }
 }
