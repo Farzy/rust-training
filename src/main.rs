@@ -1,19 +1,14 @@
-#[macro_use]
-extern crate quick_error;
-
-#[macro_use]
-extern crate error_chain;
-
+#[macro_use] extern crate quick_error;
+#[macro_use] extern crate error_chain;
 extern crate failure;
 extern crate failure_derive;
-
 extern crate serde;
 extern crate serde_json;
-#[macro_use]
-extern crate serde_derive;
+#[macro_use] extern crate serde_derive;
 
 use std::collections::HashMap;
 use std::env;
+
 mod strings;
 mod ownership;
 mod dynamic;
