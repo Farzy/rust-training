@@ -14,8 +14,20 @@ fn run_application() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-pub fn main() {
+fn box_error() {
     if let Err(e) = run_application() {
         eprintln!("An error happened: {}", e);
     }
+}
+
+pub fn main() {
+    let envvar = "NUM_THREADS";
+    println!("Testing with no environment variable named {}…", envvar);
+    box_error();
+    println!("Testing with non numeric env. var. 'foo'…");
+    env::set_var(envvar, "foo");
+    box_error();
+    println!("Testing with numeric env. var. '42'…");
+    env::set_var(envvar, "42");
+    box_error();
 }

@@ -36,7 +36,7 @@ pub fn iterators() {
     println!("v: {:?}", v);
 }
 
-pub fn map_filter_fold() {
+pub fn main() {
     println!("Using map:");
     let iter = 1..10; // Cannot create iterator over range of float64
     let rev: Vec<String> = iter

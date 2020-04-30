@@ -13,7 +13,7 @@ extern crate serde_json;
 extern crate serde_derive;
 
 use std::collections::{LinkedList, HashMap};
-use std::{env, io};
+use std::env;
 mod hello;
 use crate::hello::hello;
 mod strings;
@@ -21,6 +21,7 @@ mod ownership;
 mod dynamic;
 mod traits;
 mod iterator;
+mod input;
 mod myrand;
 mod drop;
 // This module contains all the functions that we previously in my "samples" Rust project
@@ -76,6 +77,21 @@ fn fib_dyn(n: u64, map: &mut HashMap<u64, u64>) -> u64 {
                 val
             }
         }
+    }
+}
+
+fn usage(functions: &HashMap<String, (String, fn())>) {
+    eprintln!(r#"
+Usage: PROGNAME [options] [function]
+
+ -h: Print this help
+ -i: Only use by "do_input" for interaction
+
+If no function name is giver than all are executed.
+
+List of functions:"#);
+    for (name, (description, _)) in functions.iter() {
+        eprintln!(" - {}: {}", name, description);
     }
 }
 
@@ -181,67 +197,38 @@ fn main() {
     iterator::iterators();
 
     section("Map, Filter, Fold…");
-    iterator::map_filter_fold();
+    iterator::main();
 
-    section("Randomness");
-    myrand::main();
+    let mut functions: HashMap<String, (String, fn())> = HashMap::new();
+    functions.insert(String::from("cust-err"), (String::from("Custom error"), custom_error::main));
+    functions.insert(String::from("quick-err"), (String::from("Quick error"), quick_error_test::main));
+    functions.insert(String::from("error-chain"), (String::from("Error chain"), error_chain_test::main));
+    functions.insert(String::from("failure"), (String::from("Failure"), failure_test::main));
+    functions.insert(String::from("json"), (String::from("JSON"), json::main));
+    functions.insert(String::from("result-option"), (String::from("Result<> and Option"), result_option::main));
+    functions.insert(String::from("lifetime"), (String::from("Lifetime"), lifetime::main));
+    functions.insert(String::from("generics"), (String::from("Generics"), generics::main));
+    functions.insert(String::from("drop"), (String::from("Drop"), drop::main));
+    functions.insert(String::from("box-error"), (String::from("Box Error"), box_error::main));
+    functions.insert(String::from("randomness"), (String::from("Randomness"), myrand::main));
+    functions.insert(String::from("input"), (String::from("Input"), input::main));
+    // functions.insert(String::from(""), (String::from(""), ::main));
 
-    section("Input");
-    // Only execute this interactive code if "-i" is provided on the command line
-    let mut do_input = false;
-    for arg in env::args() {
-        if arg == "-i".to_string() {
-            do_input = true;
-            break;
+    if env::args().len() == 1 {
+        for (name, (description, func)) in functions.iter() {
+            section(&format!("{} ({})", description, name));
+            func();
         }
-    }
-    if do_input {
-        let mut word = String::new();
-        while word.trim() != "rust" {
-            println!("What is the secret word?");
-            word.clear();
-            io::stdin().read_line(&mut word).expect("Could not read stdin");
-        }
-        println!("You found the secret word! Please proceed!");
     } else {
-        println!("SKIPPED: In order to execute this section add '-i' to the command line.")
+        let k = env::args().skip(1).next().unwrap();
+        if k == "-h" || k == "--help" {
+            usage(&functions);
+        } else if functions.contains_key(&k) {
+            let (description, func) = functions.get(&k).unwrap();
+            section(description);
+            func();
+        } else {
+            eprintln!("ERROR: Function '{}' not found", k);
+        }
     }
-
-    section("Drop");
-    drop::main();
-
-    section("Box Error");
-    let envvar = "NUM_THREADS";
-    println!("Testing with no environment variable named {}…", envvar);
-    box_error::main();
-    println!("Testing with non numeric env. var. 'foo'…");
-    env::set_var(envvar, "foo");
-    box_error::main();
-    println!("Testing with numeric env. var. '42'…");
-    env::set_var(envvar, "42");
-    box_error::main();
-
-    section("Custom error");
-    custom_error::main();
-
-    section("quick-error");
-    quick_error_test::main();
-
-    section("error-chain");
-    error_chain_test::main();
-
-    section("failure");
-    failure_test::main();
-
-    section("JSON");
-    json::main();
-
-    section("Result<> and Option");
-    result_option::main();
-
-    section("Lifetime");
-    lifetime::main();
-
-    section("Generics");
-    generics::main();
 }
