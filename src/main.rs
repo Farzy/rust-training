@@ -39,6 +39,9 @@ mod vector;
 mod linkedlist;
 mod functions;
 
+// Simplify long hashmap type
+type FunctionHash = HashMap<String, (String, fn())>;
+
 fn section(title: &str) {
     let len = title.len();
     let dashes = "-".repeat(len);
@@ -47,7 +50,7 @@ fn section(title: &str) {
     println!("+-{}-+\n", dashes);
 }
 
-fn usage(functions: &HashMap<String, (String, fn())>) {
+fn usage(functions: &FunctionHash) {
     eprintln!(r#"
 Usage: PROGNAME [options] [function...]
 
@@ -64,7 +67,7 @@ List of functions:"#);
 }
 
 fn main() {
-    let mut functions: HashMap<String, (String, fn())> = HashMap::new();
+    let mut functions: FunctionHash = HashMap::new();
     functions.insert(String::from("cust-err"), (String::from("Custom error"), custom_error::main));
     functions.insert(String::from("quick-err"), (String::from("Quick error"), quick_error_test::main));
     functions.insert(String::from("error-chain"), (String::from("Error chain"), error_chain_test::main));
