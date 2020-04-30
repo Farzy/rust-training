@@ -14,8 +14,6 @@ extern crate serde_derive;
 
 use std::collections::HashMap;
 use std::env;
-mod hello;
-use crate::hello::hello;
 mod strings;
 mod ownership;
 mod dynamic;
@@ -39,14 +37,7 @@ mod fibonacci;
 mod envvars;
 mod vector;
 mod linkedlist;
-
-fn say_hello(name: &str) {
-    println!("Hello {}!", name)
-}
-
-fn add(a: i32, b: i64) -> i32 {
-    return a + (b as i32);
-}
+mod functions;
 
 fn section(title: &str) {
     let len = title.len();
@@ -72,19 +63,6 @@ List of functions:"#);
 }
 
 fn main() {
-    // Execute older code
-    section("Old samples");
-    samples::main();
-
-    section("Functions");
-    say_hello("world");
-
-    let i1 = 1;
-    let i2 = 2;
-    println!("{} + {} = {}", i1, i2, add(i1, i2));
-
-    hello();
-
     let mut functions: HashMap<String, (String, fn())> = HashMap::new();
     functions.insert(String::from("cust-err"), (String::from("Custom error"), custom_error::main));
     functions.insert(String::from("quick-err"), (String::from("Quick error"), quick_error_test::main));
@@ -108,7 +86,8 @@ fn main() {
     functions.insert(String::from("envvars"), (String::from("Environment variables"), envvars::main));
     functions.insert(String::from("vector"), (String::from("Vector"), vector::main));
     functions.insert(String::from("linked-list"), (String::from("LinkedList"), linkedlist::main));
-    // functions.insert(String::from(""), (String::from(""), ::main));
+    functions.insert(String::from("function-crate"), (String::from("Functions and Crates"), functions::main));
+    functions.insert(String::from("old-tutorial"), (String::from("Old tutorial code"), samples::main));
 
     if env::args().len() == 1 {
         for (name, (description, func)) in functions.iter() {
