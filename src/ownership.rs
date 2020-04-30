@@ -49,3 +49,36 @@ pub fn mutable_and_immutable_borrows() {
     // This did not compile in previous versions of the compiler (~ 1.24).
     *list.first_mut().expect("list was empty") += 1;
 }
+
+pub fn main() {
+    let values = vec![1, 2, 3, 4, 5];
+    let sum = take_ownership_sum(values);
+    println!("Sum = {}", sum);
+    // println!("Sum of {} values: {}", values.len(), sum); // Forbidden
+
+    let values2 = vec![1, 2, 3, 4, 5];
+    let sum = borrow_sum(&values2);
+    println!("Sum of {} values: {}", values2.len(), sum);
+
+    println!("cap_values_owned");
+    let mut values = vec![1, 2, 3, 10000, 5];
+    values = cap_values_owned(10, values);
+
+    for v in &values {
+        println!("Capped value owned: {}", *v);
+    }
+
+    for v in values {
+        println!("Capped value owned: {}", v);
+    }
+
+    println!("cap_values mutable arg");
+    let mut values = vec![1, 2, 3, 10000, 5];
+    cap_values(10, &mut values);
+
+    for v in &values {
+        println!("Capped value mut: {}", *v);
+    }
+
+    mutable_and_immutable_borrows();
+}

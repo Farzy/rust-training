@@ -152,53 +152,6 @@ fn main() {
         println!("fib({}) = {}", *n, fib_dyn(*n, &mut map));
     }
 
-    section("Substrings");
-    strings::main();
-
-    section("Ownership");
-    let values = vec![1, 2, 3, 4, 5];
-    let sum = ownership::take_ownership_sum(values);
-    println!("Sum = {}", sum);
-    // println!("Sum of {} values: {}", values.len(), sum); // Forbidden
-
-    let values2 = vec![1, 2, 3, 4, 5];
-    let sum = ownership::borrow_sum(&values2);
-    println!("Sum of {} values: {}", values2.len(), sum);
-
-    println!("cap_values_owned");
-    let mut values = vec![1, 2, 3, 10000, 5];
-    values = ownership::cap_values_owned(10, values);
-
-    for v in &values {
-        println!("Capped value owned: {}", *v);
-    }
-
-    for v in values {
-        println!("Capped value owned: {}", v);
-    }
-
-    println!("cap_values mutable arg");
-    let mut values = vec![1, 2, 3, 10000, 5];
-    ownership::cap_values(10, &mut values);
-
-    for v in &values {
-        println!("Capped value mut: {}", *v);
-    }
-
-    ownership::mutable_and_immutable_borrows();
-
-    section("Traits");
-    traits::main();
-
-    section("Dynamic dispatch");
-    dynamic::main();
-
-    section("Iterators");
-    iterator::iterators();
-
-    section("Map, Filter, Fold…");
-    iterator::main();
-
     let mut functions: HashMap<String, (String, fn())> = HashMap::new();
     functions.insert(String::from("cust-err"), (String::from("Custom error"), custom_error::main));
     functions.insert(String::from("quick-err"), (String::from("Quick error"), quick_error_test::main));
@@ -212,6 +165,12 @@ fn main() {
     functions.insert(String::from("box-error"), (String::from("Box Error"), box_error::main));
     functions.insert(String::from("randomness"), (String::from("Randomness"), myrand::main));
     functions.insert(String::from("input"), (String::from("Input"), input::main));
+    functions.insert(String::from("map-filter-fold"), (String::from("Map, Filter, Fold…"), iterator::main));
+    functions.insert(String::from("iterators"), (String::from("Iterators"), iterator::iterators));
+    functions.insert(String::from("dynamic"), (String::from("Dynamic dispath"), dynamic::main));
+    functions.insert(String::from("traits"), (String::from("Traits"), traits::main));
+    functions.insert(String::from("ownership"), (String::from("Ownership"), ownership::main));
+    functions.insert(String::from("substrings"), (String::from("Substrings"), strings::main));
     // functions.insert(String::from(""), (String::from(""), ::main));
 
     if env::args().len() == 1 {
