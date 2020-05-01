@@ -1,5 +1,5 @@
 // Sample taken from the "arc1.rs" exercise of Rustlings.
-// I add the lines commented with ADDON.
+// I added the lines commented with ADDON.
 
 use std::sync::{Arc,Mutex};
 use std::thread;
