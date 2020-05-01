@@ -33,6 +33,7 @@ mod envvars;
 mod vector;
 mod linkedlist;
 mod functions;
+mod arc;
 
 // Simplify long hashmap type
 type FunctionHash = HashMap<String, (String, fn())>;
@@ -87,6 +88,7 @@ fn main() {
     functions.insert(String::from("linked-list"), (String::from("LinkedList"), linkedlist::main));
     functions.insert(String::from("function-crate"), (String::from("Functions and Crates"), functions::main));
     functions.insert(String::from("old-tutorial"), (String::from("Old tutorial code"), samples::main));
+    functions.insert(String::from("arc"), (String::from("Asynchronous RC"), arc::main));
 
     if env::args().len() == 1 { // No arguments
         for (name, (description, func)) in functions.iter() {
