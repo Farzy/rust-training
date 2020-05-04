@@ -2,9 +2,16 @@ pub fn main() {
     let simulated_user_specified_value = 10;
     let simulated_random_number = 7;
 
+    println!(" - Use u32 cacher");
     generate_workout(
         simulated_user_specified_value,
         simulated_random_number
+    );
+
+    println!(" - Use generic cacher");
+    generate_workout_gen(
+        "10",
+        7.0
     );
 }
 
@@ -41,8 +48,8 @@ use std::thread;
 use std::time::Duration;
 use std::collections::HashMap;
 
-#[allow(unused_variables)]
 fn generate_workout(intensity: u32, random_number: u32) {
+    #[allow(unused_variables)]
     let mut expensive_result = Cacher::new(|num| {
         println!("calculating slowly...");
         thread::sleep(Duration::from_secs(1));
@@ -71,21 +78,10 @@ fn generate_workout(intensity: u32, random_number: u32) {
     }
 }
 
-#[test]
-fn call_with_different_values() {
-    let mut c = Cacher::new(|a| a);
-
-    let _v1 = c.value(1);
-    let v2 = c.value(2);
-
-    assert_eq!(v2, 2);
-}
-
 // ----------------------------------------------------------------------------------------------
 
 use std::hash::Hash;
 
-#[allow(dead_code)]
 struct CacherGen<T, U, V>
     where T: Fn(U) -> V
 {
@@ -93,7 +89,6 @@ struct CacherGen<T, U, V>
     value: HashMap<U,V>,
 }
 
-#[allow(dead_code)]
 impl<T,U,V> CacherGen<T,U,V>
     where T: Fn(U) -> V,
           U: Eq + Hash + Copy,
@@ -118,9 +113,8 @@ impl<T,U,V> CacherGen<T,U,V>
     }
 }
 
-#[allow(dead_code)]
-#[allow(unused_variables)]
 fn generate_workout_gen(intensity: &str, random_number: f64) {
+    #[allow(unused_variables)]
     let mut expensive_result = CacherGen::new(|num| {
         println!("calculating slowly...");
         thread::sleep(Duration::from_secs(1));
@@ -129,7 +123,7 @@ fn generate_workout_gen(intensity: &str, random_number: f64) {
     });
 
 
-    if intensity == "25" {
+    if intensity < "25" {
         println!(
             "Today, do {} pushups!",
             expensive_result.value(intensity)
@@ -150,12 +144,27 @@ fn generate_workout_gen(intensity: &str, random_number: f64) {
     }
 }
 
-#[test]
-fn call_with_different_values_gen() {
-    let mut c = CacherGen::new(|a : &str| -> u64 { a.parse().unwrap() });
+#[cfg(test)]
+mod test {
+    use super::*;
 
-    let _v1 = c.value("1");
-    let v2 = c.value("2");
+    #[test]
+    fn call_with_different_values() {
+        let mut c = Cacher::new(|a| a);
 
-    assert_eq!(v2, 2);
+        let _v1 = c.value(1);
+        let v2 = c.value(2);
+
+        assert_eq!(v2, 2);
+    }
+
+    #[test]
+    fn call_with_different_values_gen() {
+        let mut c = CacherGen::new(|a: &str| -> u64 { a.parse().unwrap() });
+
+        let _v1 = c.value("1");
+        let v2 = c.value("2");
+
+        assert_eq!(v2, 2);
+    }
 }
