@@ -40,10 +40,34 @@ fn deref() {
     assert_eq!(x, *y);
 }
 
+struct CustomSmartPointer {
+    data: String,
+}
+
+impl Drop for CustomSmartPointer {
+    fn drop(&mut self) {
+        println!("Dropping CustomSmartPointer with data '{}'!", self.data);
+    }
+}
+
+#[allow(unused_variables)]
+fn dropper() {
+    let c = CustomSmartPointer {
+        data: String::from("my stuff")
+    };
+    let e = CustomSmartPointer {
+        data: String::from("other stuff")
+    };
+    println!("CustomSmartPointers created.");
+}
+
 pub fn main() {
     helper::subsection("Box type");
     boxing();
 
-    helper::subsection("Deref");
+    helper::subsection("Deref trait");
     deref();
+
+    helper::subsection("Drop trait");
+    dropper();
 }
