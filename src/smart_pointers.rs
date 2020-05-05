@@ -9,6 +9,14 @@ enum List {
 
 use List::*;
 
+fn boxing() {
+    let b = Box::new(5);
+    println!("Box<u32> = {}", b);
+
+    let list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));
+    println!("List = {:?}", list);
+}
+
 struct MyBox<T>(T);
 
 impl<T> MyBox<T> {
@@ -24,21 +32,12 @@ impl<T> Deref for MyBox<T> {
     }
 }
 
-fn boxing() {
-    let b = Box::new(5);
-    println!("Box<u32> = {}", b);
-
-    let list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));
-    println!("List = {:?}", list);
-}
-
 fn deref() {
     let x = 5;
     let y = MyBox::new(x);
     println!("Asserting that *MyBox::new(x) == x");
     assert_eq!(5, x);
     assert_eq!(x, *y);
-
 }
 
 pub fn main() {
