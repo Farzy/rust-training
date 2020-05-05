@@ -1,4 +1,5 @@
 use std::ops::Deref;
+use rust_training::helper;
 
 #[derive(Debug)]
 enum List {
@@ -23,16 +24,27 @@ impl<T> Deref for MyBox<T> {
     }
 }
 
-pub fn main() {
+fn boxing() {
     let b = Box::new(5);
     println!("Box<u32> = {}", b);
 
     let list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));
     println!("List = {:?}", list);
+}
 
+fn deref() {
     let x = 5;
     let y = MyBox::new(x);
     println!("Asserting that *MyBox::new(x) == x");
     assert_eq!(5, x);
     assert_eq!(x, *y);
+
+}
+
+pub fn main() {
+    helper::subsection("Box type");
+    boxing();
+
+    helper::subsection("Deref");
+    deref();
 }
