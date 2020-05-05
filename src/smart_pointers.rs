@@ -55,10 +55,18 @@ fn dropper() {
     let c = CustomSmartPointer {
         data: String::from("my stuff")
     };
-    let e = CustomSmartPointer {
+    let d = CustomSmartPointer {
         data: String::from("other stuff")
     };
+    let e = CustomSmartPointer {
+        data: String::from("explicite dropper")
+    };
     println!("CustomSmartPointers created.");
+    println!("About to drop CSP with data '{}' early:", e.data);
+    drop(e);
+    // Next line won't compile
+    // println!("At this point '{}' is dropped.", e.data);
+    println!("At this point it is dropped.");
 }
 
 pub fn main() {
