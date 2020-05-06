@@ -1,4 +1,3 @@
-use std::ops::Deref;
 use rust_training::helper;
 
 // --------------------------------------------------------------------------------------------
@@ -24,6 +23,9 @@ fn boxing() {
 // --------------------------------------------------------------------------------------------
 // Deref
 // --------------------------------------------------------------------------------------------
+
+use std::ops::Deref;
+use std::ops::DerefMut;
 
 #[derive(Debug)]
 struct MyBox<T>(T);
@@ -144,7 +146,6 @@ enum ListRc<T> {
 }
 
 use self::ListRc::*;
-use failure::_core::ops::DerefMut;
 
 fn reference_counter() {
     // This won't compile
