@@ -211,6 +211,37 @@ fn ref_cell() {
     drop(bs3);
     assert_eq!(s, RefCell::new(23));
 }
+
+// --------------------------------------------------------------------------------------------
+// Rc<RefCell<T>>
+// --------------------------------------------------------------------------------------------
+
+#[derive(Debug)]
+enum ListMut<T> {
+    ConsMut(Rc<RefCell<T>>, Rc<ListMut<T>>),
+    NilMut,
+}
+
+use ListMut::*;
+
+fn list_mut() {
+    let value = Rc::new(RefCell::new(5));
+
+    let a = Rc::new(ConsMut(Rc::clone(&value), Rc::new(NilMut)));
+    let b = ConsMut(Rc::new(RefCell::new(6)), Rc::clone(&a));
+    let c = ConsMut(Rc::new(RefCell::new(10)), Rc::clone(&a));
+
+    println!("a before: {:?}", a);
+    println!("b before: {:?}", b);
+    println!("c before: {:?}", c);
+
+    *(*value).borrow_mut() += 10;
+
+    println!("a after: {:?}", a);
+    println!("b after: {:?}", b);
+    println!("c after: {:?}", c);
+}
+
 // --------------------------------------------------------------------------------------------
 // Main
 // --------------------------------------------------------------------------------------------
@@ -233,4 +264,7 @@ pub fn main() {
 
     helper::subsection("RefCell type");
     ref_cell();
+
+    helper::subsection("Mutable list with Rc and RefCell");
+    list_mut();
 }
