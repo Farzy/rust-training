@@ -36,6 +36,7 @@ mod linkedlist;
 mod functions;
 mod arc;
 mod smart_pointers;
+mod mock;
 
 // Simplify long hashmap type
 type FunctionHash = HashMap<String, (String, fn())>;
@@ -84,6 +85,7 @@ fn main() {
     functions.insert(String::from("old-tutorial"), (String::from("Old tutorial code"), samples::main));
     functions.insert(String::from("arc"), (String::from("Asynchronous RC"), arc::main));
     functions.insert(String::from("smart-pointers"), (String::from("Smart Pointers"), smart_pointers::main));
+    functions.insert(String::from("mock"), (String::from("Mock using RefCell"), mock::main));
 
     if env::args().len() == 1 { // No arguments
         for (name, (description, func)) in functions.iter() {
