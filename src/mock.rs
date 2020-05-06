@@ -36,28 +36,29 @@ where
 }
 
 pub fn main() {
-    println!("Please run 'cargo test' to test me!");
+    println!("Please run 'cargo test mock' to test me!");
 }
 
 #[cfg(test)]
 mod test {
     use super::*;
+    use std::cell::RefCell;
 
     struct MockMessenger {
-        sent_messages: Vec<String>,
+        sent_messages: RefCell<Vec<String>>,
     }
 
     impl MockMessenger {
         fn new() -> MockMessenger {
             MockMessenger {
-                sent_messages: vec![],
+                sent_messages: RefCell::new(vec![]),
             }
         }
     }
 
     impl Messenger for MockMessenger {
         fn send(&self, msg: &str) {
-            self.sent_messages.push(msg.to_string());
+            self.sent_messages.borrow_mut().push(msg.to_string());
         }
     }
 
@@ -66,8 +67,25 @@ mod test {
         let mock_messenger = MockMessenger::new();
         let mut limit_tracker = LimitTracker::new(&mock_messenger, 100);
 
+        limit_tracker.set_value(50);
         limit_tracker.set_value(80);
 
-        assert_eq!(mock_messenger.sent_messages.len(), 1);
+        assert_eq!(mock_messenger.sent_messages.borrow().len(), 1);
+    }
+
+    #[test]
+    fn it_sends_mutiple_warnings() {
+        let mock_messenger = MockMessenger::new();
+        let mut limit_tracker = LimitTracker::new(&mock_messenger, 100);
+
+        limit_tracker.set_value(90);
+        limit_tracker.set_value(42);
+        limit_tracker.set_value(80);
+        limit_tracker.set_value(102);
+
+        assert_eq!(mock_messenger.sent_messages.borrow().len(), 3);
+        assert!(mock_messenger.sent_messages.borrow()[0].starts_with("Urgent warning"));
+        assert!(mock_messenger.sent_messages.borrow()[1].starts_with("Warning"));
+        assert!(mock_messenger.sent_messages.borrow()[2].starts_with("Error"));
     }
 }
