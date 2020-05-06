@@ -4,6 +4,8 @@ use rust_training::helper;
 // Box<T>
 // --------------------------------------------------------------------------------------------
 
+use std::borrow::BorrowMut;
+
 #[derive(Debug)]
 enum List {
     Cons(i32, Box<List>),
@@ -18,6 +20,21 @@ fn boxing() {
 
     let list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));
     println!("List = {:?}", list);
+
+    // Mutable Box
+    let mut m = Box::new(42);
+    *m = 43;
+    assert_eq!(m, Box::new(43));
+
+    let mut m = Box::new(42);
+    let p = m.borrow_mut();
+    *p = 43;
+    assert_eq!(m, Box::new(43));
+
+    let mut m = Box::new(42);
+    let p = &mut *m;
+    *p = 43;
+    assert_eq!(m, Box::new(43));
 }
 
 // --------------------------------------------------------------------------------------------
