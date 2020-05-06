@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 trait Messenger {
     fn send(&self, msg: &str);
 }

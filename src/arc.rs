@@ -54,16 +54,16 @@ especially related to lock-in.
     let sentence = Arc::new(Mutex::new(String::new()));
     let mut joinhandles = Vec::new();
 
-    for i in 0..30 {
+    for i in 0..20 {
         let child_words = Arc::clone(&shared_words);
         let child_sentence = Arc::clone(&sentence);
         let handle = thread::spawn(move || {
             let mut rng = rand::thread_rng();
-            for count in 0..rng.gen_range(1, 10) {
+            for count in 0..rng.gen_range(1, 8) {
                 thread::sleep(Duration::from_secs_f64(rng.gen_range(0.001, 0.5)));
                 let x = rng.gen_range(0, child_words.len());
                 let w = child_words[x];
-                print!("Thread {}, word #{}: {}. ", i, count+1, w);
+                println!("Thread {}, word #{}: {}. ", i, count+1, w);
                 let mut s = child_sentence.lock().unwrap();
                 (*s).push_str(" ");
                 (*s).push_str(w);
