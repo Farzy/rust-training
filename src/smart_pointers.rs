@@ -2,6 +2,8 @@ use std::ops::Deref;
 use rust_training::helper;
 
 // --------------------------------------------------------------------------------------------
+// Box<T>
+// --------------------------------------------------------------------------------------------
 
 #[derive(Debug)]
 enum List {
@@ -20,7 +22,10 @@ fn boxing() {
 }
 
 // --------------------------------------------------------------------------------------------
+// Deref
+// --------------------------------------------------------------------------------------------
 
+#[derive(Debug)]
 struct MyBox<T>(T);
 
 impl<T> MyBox<T> {
@@ -42,8 +47,59 @@ fn deref() {
     println!("Asserting that *MyBox::new(x) == x");
     assert_eq!(5, x);
     assert_eq!(x, *y);
+
 }
 
+// Now implement the mutable deref
+#[derive(Debug)]
+struct MyBoxMut<T>(T);
+
+impl<T> MyBoxMut<T> {
+    fn new(x: T) -> MyBoxMut<T> {
+        MyBoxMut(x)
+    }
+}
+
+impl<T> Deref for MyBoxMut<T> {
+    type Target = T;
+    fn deref(&self) -> &T {
+        &self.0
+    }
+}
+
+impl<T> DerefMut for MyBoxMut<T> {
+    // Not necessary here… Apparently because it's already in the implementation of Deref and
+    // no duplicate is accepted
+    //type Target = T;
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
+    }
+}
+
+fn deref_mut() {
+    let x = 5;
+    let y = MyBoxMut::new(x);
+    println!("Asserting that *MyBoxMut::new(x) == x");
+    assert_eq!(5, x);
+    assert_eq!(x, *y);
+
+    // Mutable
+
+    // THIS DOES NOT COMPILE: MyBox does not implement DerefMut
+    // let mut z = MyBox::new(42);
+    // println!("z before muting the content: {:?}", z);
+    // *z += 1;
+    // println!("z after muting the content: {:?}", z);
+
+    // THIS COMPILES
+    let mut z = MyBoxMut::new(42);
+    println!("z before muting the content: {:?}", z);
+    *z += 1;
+    println!("z after muting the content: {:?}", z);
+}
+
+// --------------------------------------------------------------------------------------------
+// Drop
 // --------------------------------------------------------------------------------------------
 
 struct CustomSmartPointer {
@@ -76,6 +132,8 @@ fn dropper() {
 }
 
 // --------------------------------------------------------------------------------------------
+// Rc<T>
+// --------------------------------------------------------------------------------------------
 
 use std::rc::Rc;
 
@@ -86,6 +144,7 @@ enum ListRc<T> {
 }
 
 use self::ListRc::*;
+use failure::_core::ops::DerefMut;
 
 fn reference_counter() {
     // This won't compile
@@ -112,6 +171,8 @@ fn reference_counter() {
 }
 
 // --------------------------------------------------------------------------------------------
+// Main
+// --------------------------------------------------------------------------------------------
 
 pub fn main() {
     helper::subsection("Box type");
@@ -119,6 +180,9 @@ pub fn main() {
 
     helper::subsection("Deref trait");
     deref();
+
+    helper::subsection("DerefMut trait");
+    deref_mut();
 
     helper::subsection("Drop trait");
     dropper();
