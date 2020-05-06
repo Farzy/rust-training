@@ -196,10 +196,20 @@ use std::cell::RefCell;
 
 fn ref_cell() {
     let r = RefCell::new(42);
-    let _b1 = r.borrow();
-    let _b2 = r.borrow();
-    // let b3 = r.borrow_mut(); // PANIC!
+    let _br1 = r.borrow();
+    let _br2 = r.borrow();
+    // let br3 = r.borrow_mut(); // PANIC!
 
+    // RefCell is immutable but interior is mutable
+    let s = RefCell::new(32);
+    {
+        let _bs1 = r.borrow();
+        let _bs2 = r.borrow();
+    }
+    let mut bs3 = s.borrow_mut(); // OK
+    *bs3 = 23;
+    drop(bs3);
+    assert_eq!(s, RefCell::new(23));
 }
 // --------------------------------------------------------------------------------------------
 // Main
