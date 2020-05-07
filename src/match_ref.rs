@@ -1,6 +1,7 @@
 // This is just to show that depending of if the "match" is made on an
 // enum or a reference to an enum, the matchers placeholder inside the
 // enum values are either value or reference to values
+#[allow(unused_variables)]
 pub fn main() {
     enum EnumMatcher {
         One(u32),
@@ -12,12 +13,12 @@ pub fn main() {
     let two = Two(42, 'z');
 
     match one {
-        One(_x1)=> println!("_x1 is a u32"),
-        Two(_x1, _y1)=> println!("_x1 is a u8, _y1 is a char"),
+        One(x1)=> println!("x1 is a u32"),
+        Two(x1, y1)=> println!("x1 is a u8, y1 is a char"),
     }
 
     match &two {
-        One(_x2)=> println!("_x2 is a &u32"),
-        Two(_x2, _y2)=> println!("_x2 is a &u8, _y2 is a &char"),
+        One(x2)=> println!("x2 is a &u32"),
+        Two(x2, y2)=> println!("x2 is a &u8, y2 is a &char"),
     }
 }
