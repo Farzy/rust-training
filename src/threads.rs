@@ -1,6 +1,7 @@
 use rust_training::helper;
 use std::thread;
 use std::time::Duration;
+use std::sync::mpsc;
 
 fn thread_no_join() {
     thread::spawn(|| {
@@ -62,6 +63,24 @@ fn thread_move() {
     handle.join().unwrap();
 }
 
+fn message_passing() {
+    let (tx, rx) = mpsc::channel();
+
+    let handle = thread::spawn( move || {
+        let val = String::from("hi");
+        println!("T: Sending message…");
+        tx.send(val).unwrap();
+        println!("T: Sleeping for 1s…");
+        thread::sleep(Duration::from_secs(1));
+        println!("T: Done sleeping in thread");
+    });
+
+    let received = rx.recv().unwrap();
+    println!("M: Got: {}", received);
+
+    handle.join().unwrap();
+}
+
 pub fn main() {
     helper::subsection("Thread with no join");
     thread_no_join();
@@ -74,4 +93,7 @@ pub fn main() {
 
     helper::subsection("Thread with move in closure");
     thread_move();
+
+    helper::subsection("Thread with message passing");
+    message_passing();
 }
