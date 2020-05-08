@@ -70,6 +70,8 @@ fn message_passing() {
         let val = String::from("hi");
         println!("T: Sending message…");
         tx.send(val).unwrap();
+        // Try this
+        // println!("Sent values: {}", val);
         println!("T: Sleeping for 1s…");
         thread::sleep(Duration::from_secs(1));
         println!("T: Done sleeping in thread");
