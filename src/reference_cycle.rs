@@ -52,10 +52,11 @@ struct Node {
     children: RefCell<Vec<Rc<Node>>>,
 }
 
+// XXX Using i32::MIN as "None" value arbitrarily
 impl Default for Node {
     fn default() -> Self {
         Node {
-            value: -9999,
+            value: i32::MIN,
             parent: RefCell::new(Weak::new()),
             children: RefCell::new(vec![]),
         }
@@ -64,7 +65,7 @@ impl Default for Node {
 
 impl fmt::Display for Node {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        if self.value != -9999 {
+        if self.value != i32::MIN { // Our arbitrary "None" value
             write!(
                 f,
                 "Node(uid: {}, parent: {}, children: {})",
