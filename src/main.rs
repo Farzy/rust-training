@@ -39,6 +39,7 @@ mod smart_pointers;
 mod mock;
 mod reference_cycle;
 mod match_ref;
+mod threads;
 
 // Simplify long hashmap type
 type FunctionHash = HashMap<String, (String, fn())>;
@@ -90,6 +91,7 @@ fn main() {
     functions.insert(String::from("mock"), (String::from("Mock using RefCell"), mock::main));
     functions.insert(String::from("ref-cycle"), (String::from("Reference Cycle"), reference_cycle::main));
     functions.insert(String::from("match-ref"), (String::from("Match & references"), match_ref::main));
+    functions.insert(String::from("threads"), (String::from("Threads"), threads::main));
 
     if env::args().len() == 1 { // No arguments
         for (name, (description, func)) in functions.iter() {
