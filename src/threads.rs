@@ -81,6 +81,23 @@ fn message_passing() {
     handle.join().unwrap();
 }
 
+fn message_passing_early_close_sender() {
+    let (tx , rx): (mpsc::Sender<String>, mpsc::Receiver<String>) = mpsc::channel();
+
+    let handle = thread::spawn( move || {
+        println!("T: Sending no message!");
+        drop(tx);
+        println!("T: Sleeping for 1s…");
+        thread::sleep(Duration::from_secs(1));
+        println!("T: Done sleeping in thread");
+    });
+
+    let received = rx.recv().unwrap_err();
+    println!("M: Got an error as expected: {}", received);
+
+    handle.join().unwrap();
+}
+
 pub fn main() {
     helper::subsection("Thread with no join");
     thread_no_join();
@@ -96,4 +113,7 @@ pub fn main() {
 
     helper::subsection("Thread with message passing");
     message_passing();
+
+    helper::subsection("Thread with message passing, no incoming message");
+    message_passing_early_close_sender();
 }
