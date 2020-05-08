@@ -1,6 +1,7 @@
 use rust_training::helper;
 use std::cell::RefCell;
 use std::rc::{Rc, Weak};
+use std::fmt;
 
 #[derive(Debug)]
 enum List {
@@ -51,6 +52,32 @@ struct Node {
     children: RefCell<Vec<Rc<Node>>>,
 }
 
+impl Default for Node {
+    fn default() -> Self {
+        Node {
+            value: -9999,
+            parent: RefCell::new(Weak::new()),
+            children: RefCell::new(vec![]),
+        }
+    }
+}
+
+impl fmt::Display for Node {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        if self.value != -9999 {
+            write!(
+                f,
+                "Node(uid: {}, parent: {}, children: {})",
+                self.value,
+                self.parent.borrow().upgrade().unwrap_or_default(),
+                self.children.borrow().len()
+            )
+        } else {
+            write!(f, "Node(None)")
+        }
+    }
+}
+
 fn weak_ref() {
     let leaf = Rc::new(Node {
         value: 3,
@@ -58,7 +85,10 @@ fn weak_ref() {
         children: RefCell::new(vec![]),
     });
 
-    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
+    println!(
+        "leaf parent = {}",
+        leaf.parent.borrow().upgrade().unwrap_or_default()
+    );
 
     let branch = Rc::new(Node {
         value: 5,
@@ -68,8 +98,12 @@ fn weak_ref() {
 
     *leaf.parent.borrow_mut() = Rc::downgrade(&branch);
 
-    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
-    println!("leaf = {:?}", leaf);
+    println!(
+        "leaf parent = {}",
+        *leaf.parent.borrow().upgrade().unwrap_or_default()
+    );
+    println!(
+        "leaf = {}", leaf);
 }
 
 pub fn main() {
