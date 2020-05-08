@@ -86,25 +86,31 @@ fn weak_ref() {
         children: RefCell::new(vec![]),
     });
 
-    println!(
-        "leaf parent = {}",
-        leaf.parent.borrow().upgrade().unwrap_or_default()
-    );
+    println!("leaf strong = {}, weak = {}", Rc::strong_count(&leaf), Rc::weak_count(&leaf));
+    println!("leaf parent = {}", leaf.parent.borrow().upgrade().unwrap_or_default());
 
-    let branch = Rc::new(Node {
-        value: 5,
-        parent: RefCell::new(Weak::new()),
-        children: RefCell::new(vec![Rc::clone(&leaf)]),
-    });
+    {
+        println!("\nCreate branch in inner scope\n");
+        let branch = Rc::new(Node {
+            value: 5,
+            parent: RefCell::new(Weak::new()),
+            children: RefCell::new(vec![Rc::clone(&leaf)]),
+        });
 
-    *leaf.parent.borrow_mut() = Rc::downgrade(&branch);
+        println!("branch before strong = {}, weak = {}", Rc::strong_count(&branch), Rc::weak_count(&branch));
+        *leaf.parent.borrow_mut() = Rc::downgrade(&branch);
 
-    println!(
-        "leaf parent = {}",
-        *leaf.parent.borrow().upgrade().unwrap_or_default()
-    );
-    println!(
-        "leaf = {}", leaf);
+        println!("leaf parent = {}", *leaf.parent.borrow().upgrade().unwrap_or_default());
+        println!("leaf = {}", leaf);
+        println!("branch after strong = {}, weak = {}", Rc::strong_count(&branch), Rc::weak_count(&branch));
+        println!("leaf strong = {}, weak = {}", Rc::strong_count(&leaf), Rc::weak_count(&leaf));
+
+        println!("\nLeave inner scope\n");
+    }
+
+    println!("leaf parent = {}", *leaf.parent.borrow().upgrade().unwrap_or_default());
+    println!("leaf = {}", leaf);
+    println!("leaf strong = {}, weak = {}", Rc::strong_count(&leaf), Rc::weak_count(&leaf));
 }
 
 pub fn main() {
