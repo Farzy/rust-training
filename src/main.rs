@@ -40,6 +40,7 @@ mod mock;
 mod reference_cycle;
 mod match_ref;
 mod threads;
+mod mutex;
 
 // Simplify long hashmap type
 type FunctionHash = HashMap<String, (String, fn())>;
@@ -92,6 +93,7 @@ fn main() {
     functions.insert(String::from("ref-cycle"), (String::from("Reference Cycle"), reference_cycle::main));
     functions.insert(String::from("match-ref"), (String::from("Match & references"), match_ref::main));
     functions.insert(String::from("threads"), (String::from("Threads"), threads::main));
+    functions.insert(String::from("mutex"), (String::from("Mutex"), mutex::main));
 
     if env::args().len() == 1 { // No arguments
         for (name, (description, func)) in functions.iter() {
