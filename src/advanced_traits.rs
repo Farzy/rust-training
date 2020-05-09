@@ -1,5 +1,5 @@
 use rust_training::helper;
-use std::ops::Add;
+use std::ops::{Add, Deref};
 use std::fmt;
 use failure::_core::fmt::Formatter;
 
@@ -111,6 +111,13 @@ impl fmt::Display for Wrapper {
     }
 }
 
+impl Deref for Wrapper {
+    type Target = Vec<String>;
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
 pub fn main() {
     helper::subsection("Operator overloading");
     assert_eq!(
@@ -139,4 +146,7 @@ pub fn main() {
     helper::subsection("Using the Newtype Pattern to Implement External Traits on External Types");
     let w = Wrapper(vec![String::from("hello"), String::from("world")]);
     println!("w = {}", w);
+
+    helper::subsection("Use Deref on Wrapper");
+    println!("w.len() = {}", w.len());
 }
