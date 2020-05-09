@@ -42,11 +42,28 @@ pub fn main() {
     assert_eq!(&[1, 2, 3], a);
     assert_eq!(&[4, 5, 6], b);
 
-    println!("Reproduce slide_at_mut() for &[i32]:");
+    println!("Reproduce slide_at_mut() for &[i32]");
     let (a, b) = split_at_mut(r,3);
 
     assert_eq!(&[1, 2, 3], a);
     assert_eq!(&[4, 5, 6], b);
+
+    println!("Create an invalid slice");
+    let address = 0x01234usize;
+    let r = address as *mut i32;
+
+    // This line is still safe
+    let _slice: &[i32] = unsafe { slice::from_raw_parts_mut(r, 10000) };
+    // This one will crash with an error like:
+    //   Process finished with exit code 139 (interrupted by signal 11: SIGSEGV)
+    // or:
+    //   Segmentation fault: 11
+    //println!("slice = {:?}", slice);
+
+    helper::subsection("Call external code");
+    unsafe {
+        println!("Absolute value of -3 according to C: {}", abs(-3));
+    }
 
 }
 
@@ -70,4 +87,8 @@ fn split_at_mut(slice: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
             slice::from_raw_parts_mut(ptr.add(mid), len - mid),
         )
     }
+}
+
+extern "C" {
+    fn abs(input: i32) -> i32;
 }
