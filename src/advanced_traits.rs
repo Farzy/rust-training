@@ -1,6 +1,7 @@
 use rust_training::helper;
 use std::ops::Add;
 use std::fmt;
+use failure::_core::fmt::Formatter;
 
 #[derive(Debug, PartialEq)]
 struct Point {
@@ -102,6 +103,14 @@ impl fmt::Display for Point {
     }
 }
 
+struct Wrapper(Vec<String>);
+
+impl fmt::Display for Wrapper {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        write!(f, "[{}]", self.0.join(", "))
+    }
+}
+
 pub fn main() {
     helper::subsection("Operator overloading");
     assert_eq!(
@@ -126,4 +135,8 @@ pub fn main() {
     helper::subsection("Using Supertraits to Require One Trait’s Functionality Within Another Trait");
     let p = Point { x: 2, y: 3 };
     p.outline_print();
+
+    helper::subsection("Using the Newtype Pattern to Implement External Traits on External Types");
+    let w = Wrapper(vec![String::from("hello"), String::from("world")]);
+    println!("w = {}", w);
 }
