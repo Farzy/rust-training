@@ -43,6 +43,7 @@ mod threads;
 mod mutex;
 mod oop;
 mod unsafe_rust;
+mod advanced_traits;
 
 // Simplify long hashmap type
 type FunctionHash = HashMap<String, (String, fn())>;
@@ -98,6 +99,7 @@ fn main() {
     functions.insert(String::from("mutex"), (String::from("Mutex"), mutex::main));
     functions.insert(String::from("oop"), (String::from("Object-oriented programming"), oop::main));
     functions.insert(String::from("unsafe"), (String::from("Unsafe Rust"), unsafe_rust::main));
+    functions.insert(String::from("advanced-traits"), (String::from("Advanced Traits"), advanced_traits::main));
 
     if env::args().len() == 1 { // No arguments
         for (name, (description, func)) in functions.iter() {
