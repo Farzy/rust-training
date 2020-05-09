@@ -1,4 +1,5 @@
 use rust_training::helper;
+use std::slice;
 
 pub fn main() {
     helper::subsection("Raw pointers");
@@ -30,4 +31,43 @@ pub fn main() {
         dangerous();
     }
 
+    helper::subsection("Safe abstractions over unsafe code");
+
+    let mut v = vec![1, 2, 3, 4, 5, 6];
+    let r = &mut v[..];
+
+    println!("slice_at_mut()");
+    let (a, b) = r.split_at_mut(3);
+
+    assert_eq!(&[1, 2, 3], a);
+    assert_eq!(&[4, 5, 6], b);
+
+    println!("Reproduce slide_at_mut() for &[i32]:");
+    let (a, b) = split_at_mut(r,3);
+
+    assert_eq!(&[1, 2, 3], a);
+    assert_eq!(&[4, 5, 6], b);
+
+}
+
+// error[E0499]: cannot borrow `*slice` as mutable more than once at a time
+// fn split_at_mut(slice: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
+//     let len = slice.len();
+//     assert!(mid <= len);
+//
+//     (&mut slice[..mid], &mut slice[mid..])
+// }
+
+fn split_at_mut(slice: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
+    let len = slice.len();
+    let ptr = slice.as_mut_ptr();
+
+    assert!(mid <= len);
+
+    unsafe {
+        (
+            slice::from_raw_parts_mut(ptr, mid),
+            slice::from_raw_parts_mut(ptr.add(mid), len - mid),
+        )
+    }
 }
