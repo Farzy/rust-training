@@ -1,4 +1,7 @@
+use rust_training::helper;
+
 pub fn main() {
+    helper::subsection("Raw pointers");
     let mut num = 5;
 
     println!("num = {}", num);
@@ -9,8 +12,22 @@ pub fn main() {
     println!("r1 = {:?}, r2 = {:?}", r1, r2);
 
     unsafe {
+        println!("*r1 = {}, *r2 = {}", *r1, *r2);
         *r2 = 2;
     }
 
     println!("num after unsafe change = {}", num);
+
+    unsafe {
+        println!("*r1 = {}, *r2 = {}", *r1, *r2);
+    }
+
+    helper::subsection("Calling unsafe functions");
+
+    unsafe fn dangerous() {}
+
+    unsafe {
+        dangerous();
+    }
+
 }
