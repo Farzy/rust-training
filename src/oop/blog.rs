@@ -1,3 +1,5 @@
+use std::fmt;
+
 pub struct Post {
     state: Option<Box<dyn State>>,
     content: String,
@@ -30,12 +32,32 @@ impl Post {
             self.state = Some(s.approve())
         }
     }
+
+    pub fn status(&self) -> &str {
+        self.state.as_ref().unwrap().status()
+    }
 }
+
 
 trait State {
     fn request_review(self: Box<Self>) -> Box<dyn State>;
     fn approve(self: Box<Self>) -> Box<dyn State>;
     fn content<'a>(&self, post: &'a Post) -> &'a str;
+    fn status(&self) -> &'static str;
+}
+
+// Manually implement Debug for trait State
+impl fmt::Debug for dyn State {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "State: {}", self.status())
+    }
+}
+
+// Manually implement Display for trait State
+impl fmt::Display for dyn State {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.status())
+    }
 }
 
 struct Draft {}
@@ -51,6 +73,10 @@ impl State for Draft {
 
     fn content<'a>(&self, _post: &'a Post) -> &'a str {
         ""
+    }
+
+    fn status(&self) -> &'static str {
+        "Draft"
     }
 }
 
@@ -68,6 +94,10 @@ impl State for PendingReview {
     fn content<'a>(&self, _post: &'a Post) -> &'a str {
         ""
     }
+
+    fn status(&self) -> &'static str {
+        "PendingReview"
+    }
 }
 
 struct Published {}
@@ -83,5 +113,9 @@ impl State for Published {
 
     fn content<'a>(&self, post: &'a Post) -> &'a str {
         &post.content
+    }
+
+    fn status(&self) -> &'static str {
+        "Published"
     }
 }
