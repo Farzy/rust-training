@@ -1,5 +1,6 @@
 use rust_training::helper;
 use std::ops::Add;
+use std::fmt;
 
 #[derive(Debug, PartialEq)]
 struct Point {
@@ -78,6 +79,29 @@ impl Animal for Dog {
     }
 }
 
+trait OutlinePrint: fmt::Display {
+    fn outline_print(&self) {
+        let output = self.to_string();
+        let len = output.len();
+        println!("{}", "*".repeat(len + 4));
+        println!("*{}*", " ".repeat(len + 2));
+        println!("* {} *", output);
+        println!("*{}*", " ".repeat(len + 2));
+        println!("{}", "*".repeat(len + 4));
+    }
+}
+
+// Won't work if fmt::Display is not implemented:
+//   error[E0277]: `advanced_traits::Point` doesn't implement `std::fmt::Display`
+impl OutlinePrint for Point {}
+
+// Implement supertrait needed by OutlinePrint
+impl fmt::Display for Point {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "({}, {})", self.x, self.y)
+    }
+}
+
 pub fn main() {
     helper::subsection("Operator overloading");
     assert_eq!(
@@ -98,4 +122,8 @@ pub fn main() {
 
     println!("A baby dog is called a {}", Dog::baby_name());
     println!("A baby dog is called a {}", <Dog as Animal>::baby_name());
+
+    helper::subsection("Using Supertraits to Require One Trait’s Functionality Within Another Trait");
+    let p = Point { x: 2, y: 3 };
+    p.outline_print();
 }
