@@ -56,7 +56,7 @@ Specify one or more function names.
 If no function name is giver then all of them are executed.
 
 List of functions:"#);
-    for (name, (description, _)) in functions.iter() {
+    for (name, (description, _)) in functions {
         eprintln!(" - {}: {}", name, description);
     }
 }
