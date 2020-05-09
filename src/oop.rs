@@ -24,4 +24,7 @@ pub fn main() {
     post.approve();
     assert_eq!("Published", post.status());
     assert_eq!("I ate a salad for lunch today.\nSome more salad…\n", post.content());
+
+    post.add_text("Addon to published Post will be refused\n");
+    assert_eq!("I ate a salad for lunch today.\nSome more salad…\n", post.content());
 }
