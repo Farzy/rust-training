@@ -1,6 +1,8 @@
 use rust_training::helper;
 use std::slice;
 
+static mut COUNTER: u32 = 0;
+
 pub fn main() {
     helper::subsection("Raw pointers");
     let mut num = 5;
@@ -61,10 +63,18 @@ pub fn main() {
     //println!("slice = {:?}", slice);
 
     helper::subsection("Call external code");
+
     unsafe {
         println!("Absolute value of -3 according to C: {}", abs(-3));
     }
 
+    helper::subsection("Static variables");
+
+    add_to_count(3);
+
+    unsafe {
+        println!("COUNTER: {}", COUNTER);
+    }
 }
 
 // error[E0499]: cannot borrow `*slice` as mutable more than once at a time
@@ -96,4 +106,10 @@ extern "C" {
 #[no_mangle]
 pub extern "C" fn call_from_c() {
     println!("Just called a Rust function from C!");
+}
+
+fn add_to_count(inc: u32) {
+    unsafe {
+        COUNTER += inc;
+    }
 }
