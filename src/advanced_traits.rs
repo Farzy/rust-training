@@ -1,7 +1,6 @@
 use rust_training::helper;
 use std::ops::{Add, Deref};
 use std::fmt;
-use failure::_core::fmt::Formatter;
 
 #[derive(Debug, PartialEq)]
 struct Point {
@@ -106,7 +105,7 @@ impl fmt::Display for Point {
 struct Wrapper(Vec<String>);
 
 impl fmt::Display for Wrapper {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "[{}]", self.0.join(", "))
     }
 }
