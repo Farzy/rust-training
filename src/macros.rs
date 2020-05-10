@@ -1,5 +1,6 @@
 use rust_training::helper;
 use rust_training::hello_macro::HelloMacro;
+use hello_macro_derive::HelloMacro;
 
 // --------------------------------------------------------------------------------------------
 // Recreate vec!
@@ -22,13 +23,8 @@ macro_rules! vec2 {
 // HelloMacro
 // --------------------------------------------------------------------------------------------
 
+#[derive(HelloMacro)]
 struct Pancakes;
-
-impl HelloMacro for Pancakes {
-    fn hello_macro() {
-        println!("Hello, Macro! My name is Pancakes!");
-    }
-}
 
 // --------------------------------------------------------------------------------------------
 // Main
