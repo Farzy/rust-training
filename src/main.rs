@@ -44,6 +44,7 @@ mod mutex;
 mod oop;
 mod unsafe_rust;
 mod advanced_traits;
+mod macros;
 
 // Simplify long hashmap type
 type FunctionHash = HashMap<String, (String, fn())>;
@@ -100,6 +101,7 @@ fn main() {
     functions.insert(String::from("oop"), (String::from("Object-oriented programming"), oop::main));
     functions.insert(String::from("unsafe"), (String::from("Unsafe Rust"), unsafe_rust::main));
     functions.insert(String::from("advanced-traits"), (String::from("Advanced Traits"), advanced_traits::main));
+    functions.insert(String::from("macros"), (String::from("Macros"), macros::main));
 
     if env::args().len() == 1 { // No arguments
         for (name, (description, func)) in functions.iter() {
