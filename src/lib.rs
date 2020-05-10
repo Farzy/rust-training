@@ -1,3 +1,5 @@
+pub mod hello_macro;
+
 pub mod helper {
     pub fn section(title: &str) {
         let len = title.len();
