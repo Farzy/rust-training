@@ -45,6 +45,7 @@ mod oop;
 mod unsafe_rust;
 mod advanced_traits;
 mod macros;
+mod monty_hall;
 
 // Simplify long hashmap type
 type FunctionHash = HashMap<String, (String, fn())>;
@@ -102,6 +103,7 @@ fn main() {
     functions.insert(String::from("unsafe"), (String::from("Unsafe Rust"), unsafe_rust::main));
     functions.insert(String::from("advanced-traits"), (String::from("Advanced Traits"), advanced_traits::main));
     functions.insert(String::from("macros"), (String::from("Macros"), macros::main));
+    functions.insert(String::from("monty-hall"), (String::from("Monty Hall (try DOORS=num ...)"), monty_hall::main));
 
     if env::args().len() == 1 { // No arguments
         for (name, (description, func)) in functions.iter() {
