@@ -29,7 +29,6 @@
 
 use rand::distributions::{Distribution, Uniform};
 use rand::Rng;
-use std::env;
 
 struct SimulationResult {
     win: bool,
@@ -78,14 +77,9 @@ fn free_doors(blocked: &[u32]) -> Vec<u32> {
 pub fn main() {
     // The estimation will be more accurate with more simulations
     let num_simulations = 10000;
-    // Number of doors
-    let door_count = env::var("DOORS")
-        .unwrap_or("3".to_string())
-        .parse::<u32>()
-        .unwrap();
 
     let mut rng = rand::thread_rng();
-    let random_door = Uniform::new(0u32, door_count);
+    let random_door = Uniform::new(0u32, 3);
 
     let (mut switch_wins, mut switch_losses) = (0, 0);
     let (mut keep_wins, mut keep_losses) = (0, 0);
