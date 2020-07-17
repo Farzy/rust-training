@@ -68,42 +68,50 @@ List of functions:"#);
 
 fn main() {
     let mut functions: FunctionHash = HashMap::new();
-    functions.insert(String::from("cust-err"), (String::from("Custom error"), custom_error::main));
-    functions.insert(String::from("quick-err"), (String::from("Quick error"), quick_error_test::main));
-    functions.insert(String::from("error-chain"), (String::from("Error chain"), error_chain_test::main));
-    functions.insert(String::from("failure"), (String::from("Failure"), failure_test::main));
-    functions.insert(String::from("json"), (String::from("JSON"), json::main));
-    functions.insert(String::from("result-option"), (String::from("Result<> and Option"), result_option::main));
-    functions.insert(String::from("lifetime"), (String::from("Lifetime"), lifetime::main));
-    functions.insert(String::from("generics"), (String::from("Generics"), generics::main));
-    functions.insert(String::from("drop"), (String::from("Drop"), drop::main));
-    functions.insert(String::from("box-error"), (String::from("Box Error"), box_error::main));
-    functions.insert(String::from("randomness"), (String::from("Randomness"), myrand::main));
-    functions.insert(String::from("input"), (String::from("Input"), input::main));
-    functions.insert(String::from("map-filter-fold"), (String::from("Map, Filter, Fold…"), iterator::main));
-    functions.insert(String::from("iterators"), (String::from("Iterators"), iterator::iterators));
-    functions.insert(String::from("dynamic"), (String::from("Dynamic dispath"), dynamic::main));
-    functions.insert(String::from("traits"), (String::from("Traits"), traits::main));
-    functions.insert(String::from("ownership"), (String::from("Ownership"), ownership::main));
-    functions.insert(String::from("substrings"), (String::from("Substrings"), strings::main));
-    functions.insert(String::from("fibonacci"), (String::from("Fibonacci"), fibonacci::main));
-    functions.insert(String::from("envvars"), (String::from("Environment variables"), envvars::main));
-    functions.insert(String::from("vector"), (String::from("Vector"), vector::main));
-    functions.insert(String::from("linked-list"), (String::from("LinkedList"), linkedlist::main));
-    functions.insert(String::from("function-crate"), (String::from("Functions and Crates"), functions::main));
-    functions.insert(String::from("old-tutorial"), (String::from("Old tutorial code"), samples::main));
-    functions.insert(String::from("arc"), (String::from("Asynchronous RC"), arc::main));
-    functions.insert(String::from("smart-pointers"), (String::from("Smart Pointers"), smart_pointers::main));
-    functions.insert(String::from("mock"), (String::from("Mock using RefCell"), mock::main));
-    functions.insert(String::from("ref-cycle"), (String::from("Reference Cycle"), reference_cycle::main));
-    functions.insert(String::from("match-ref"), (String::from("Match & references"), match_ref::main));
-    functions.insert(String::from("threads"), (String::from("Threads"), threads::main));
-    functions.insert(String::from("mutex"), (String::from("Mutex"), mutex::main));
-    functions.insert(String::from("oop"), (String::from("Object-oriented programming"), oop::main));
-    functions.insert(String::from("unsafe"), (String::from("Unsafe Rust"), unsafe_rust::main));
-    functions.insert(String::from("advanced-traits"), (String::from("Advanced Traits"), advanced_traits::main));
-    functions.insert(String::from("macros"), (String::from("Macros"), macros::main));
-    functions.insert(String::from("monty-hall"), (String::from("Monty Hall"), monty_hall::main));
+
+    macro_rules! module {
+        ($mod_name:ident, $desc:expr) => (
+            functions.insert(String::from(stringify!($mod_name)),
+                             (String::from($desc), $mod_name::main));
+        );
+    }
+
+    module!(custom_error, "Custom error");
+    module!(quick_error_test, "Quick error");
+    module!(error_chain_test, "Error chain");
+    module!(failure_test, "Failure");
+    module!(json, "JSON");
+    module!(result_option, "Result<> and Option");
+    module!(lifetime, "Lifetime");
+    module!(generics, "Generics");
+    module!(drop, "Drop");
+    module!(box_error, "Box Error");
+    module!(myrand, "Randomness");
+    module!(input, "Input");
+    module!(iterator, "Map, Filter, Fold…");
+    module!(iterator, "Iterators");
+    module!(dynamic, "Dynamic dispath");
+    module!(traits, "Traits");
+    module!(ownership, "Ownership");
+    module!(strings, "Substrings");
+    module!(fibonacci, "Fibonacci");
+    module!(envvars, "Environment variables");
+    module!(vector, "Vector");
+    module!(linkedlist, "LinkedList");
+    module!(functions, "Functions and Crates");
+    module!(samples, "Old tutorial code");
+    module!(arc, "Asynchronous RC");
+    module!(smart_pointers, "Smart Pointers");
+    module!(mock, "Mock using RefCell");
+    module!(reference_cycle, "Reference Cycle");
+    module!(match_ref, "Match & references");
+    module!(threads, "Threads");
+    module!(mutex, "Mutex");
+    module!(oop, "Object-oriented programming");
+    module!(unsafe_rust, "Unsafe Rust");
+    module!(advanced_traits, "Advanced Traits");
+    module!(macros, "Macros");
+    module!(monty_hall, "Monty Hall");
 
     if env::args().len() == 1 { // No arguments
         for (name, (description, func)) in functions.iter() {
