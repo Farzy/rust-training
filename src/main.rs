@@ -46,6 +46,7 @@ mod unsafe_rust;
 mod advanced_traits;
 mod macros;
 mod monty_hall;
+mod io;
 
 // Simplify long hashmap type
 type FunctionHash = HashMap<String, (String, fn())>;
@@ -112,6 +113,7 @@ fn main() {
     module!(advanced_traits, "Advanced Traits");
     module!(macros, "Macros");
     module!(monty_hall, "Monty Hall");
+    module!(io, "io Read/Write");
 
     if env::args().len() == 1 { // No arguments
         for (name, (description, func)) in functions.iter() {

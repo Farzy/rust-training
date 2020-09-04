@@ -1,4 +1,4 @@
-pub fn iterators() {
+pub fn main() {
     println!("- Iterator on (1..5)");
     let mut iterator = 1..5;
     while let Some(i) = iterator.next() {
@@ -34,9 +34,7 @@ pub fn iterators() {
     let taken = iterator.take(4);
     let v: Vec<i32> = taken.collect();
     println!("v: {:?}", v);
-}
 
-pub fn main() {
     println!("Using map:");
     let iter = 1..10; // Cannot create iterator over range of float64
     let rev: Vec<String> = iter
