@@ -1,8 +1,11 @@
 use std::io;
 use std::io::Read;
 use std::fs::File;
+use rust_training::helper;
 
 pub fn main() -> io::Result<()> {
+    helper::subsection("Read file /etc/services");
+
     let mut f = File::open("/etc/services")?;
     let mut buffer = Vec::new();
     let mut other_buffer = Vec::new();
