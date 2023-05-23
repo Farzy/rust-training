@@ -10,7 +10,7 @@ pub fn main() {
         println!("Random: i16: {} f32: {}", rng.gen::<i16>(), rng.gen::<f32>());
     }
     for _ in 1..20 {
-        println!("Range: i16: {}", rng.gen_range(-1000, 4000));
+        println!("Range: i16: {}", rng.gen_range(-1000..4000));
     }
     let mut ints = [0i8; 20];
     rng.fill(&mut ints);

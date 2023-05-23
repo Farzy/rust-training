@@ -59,9 +59,9 @@ especially related to lock-in.
         let child_sentence = Arc::clone(&sentence);
         let handle = thread::spawn(move || {
             let mut rng = rand::thread_rng();
-            for count in 0..rng.gen_range(1, 8) {
-                thread::sleep(Duration::from_secs_f64(rng.gen_range(0.001, 0.5)));
-                let x = rng.gen_range(0, child_words.len());
+            for count in 0..rng.gen_range(1..8) {
+                thread::sleep(Duration::from_secs_f64(rng.gen_range(0.001..0.5)));
+                let x = rng.gen_range(0..child_words.len());
                 let w = child_words[x];
                 println!("Thread {}, word #{}: {}. ", i, count+1, w);
                 let mut s = child_sentence.lock().unwrap();

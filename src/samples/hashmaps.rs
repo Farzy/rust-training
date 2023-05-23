@@ -137,7 +137,7 @@ pub fn main() {
         // could actually return some random value here - let's just return
         // some fixed value for now
 //        42
-        rand::thread_rng().gen_range(1, 101)
+        rand::thread_rng().gen_range(1..101)
     }
 
     // insert a key only if it doesn't already exist
