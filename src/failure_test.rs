@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::fs::OpenOptions;
 use std::io;
-use failure::{Backtrace, Fail};
+use thiserror::Error;
 
 const MAX_DOCS_CREATED_PER_MINUTE: u8 = 100;
 const PROJECT_NAME: &str = "my-project";
@@ -10,18 +10,18 @@ fn num_docs_created_in_last_minute() -> u8 {
     2
 }
 
-#[derive(Debug, Fail)]
+#[derive(Debug, Error)]
 enum DocumentServiceError {
-    #[fail(display = "You have exceeded the allowed number of documents per minute")]
-    RateLimitExceeded(Backtrace),
-    #[fail(display = "I/O error: {}", _0)]
-    Io(io::Error, Backtrace),
+    #[error("You have exceeded the allowed number of documents per minute")]
+    RateLimitExceeded,
+    #[error("I/O error: {0}")]
+    Io(io::Error),
 }
 
 // Implement From trait in order to be able to use "?"
 impl From<io::Error> for DocumentServiceError {
     fn from(other: io::Error) -> Self {
-        DocumentServiceError::Io(other, Backtrace::new())
+        DocumentServiceError::Io(other)
     }
 }
 
@@ -32,7 +32,7 @@ type Result<T> = result::Result<T, DocumentServiceError>;
 
 fn create_document(filename: &str) -> Result<File> {
     if num_docs_created_in_last_minute() > MAX_DOCS_CREATED_PER_MINUTE {
-        return Err(DocumentServiceError::RateLimitExceeded(Backtrace::new()));
+        return Err(DocumentServiceError::RateLimitExceeded);
     }
 
     let file = OpenOptions::new()
@@ -67,13 +67,14 @@ pub fn main() {
         Ok(()) => println!("Project created successfully!"),
         Err(e) => {
             println!("Project creation failed: {}", e);
-            if let Some(backtrace) = e.backtrace() {
-                if !backtrace.to_string().trim().is_empty() {
-                    println!("Backtrace: {:?}", backtrace);
-                }
-            } else {
-                println!("IN ORDER TO SHOW BACKTRACE RUN WITH 'RUST_BACKTRACE=1'.");
-            }
+            // FIXME: Backtrace available in "thiserror"?
+            // if let Some(backtrace) = e.backtrace() {
+            //     if !backtrace.to_string().trim().is_empty() {
+            //         println!("Backtrace: {:?}", backtrace);
+            //     }
+            // } else {
+            //     println!("IN ORDER TO SHOW BACKTRACE RUN WITH 'RUST_BACKTRACE=1'.");
+            // }
 
         },
     }
